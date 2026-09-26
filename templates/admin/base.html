@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <title>{% block title %}Dashboard{% endblock %} · Site dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin/admin.css') }}">
+</head>
+<body class="{% block body_class %}{% endblock %}">
+{% block body %}
+<div class="shell">
+    <aside class="sidebar" id="sidebar">
+        <a class="side-brand" href="{{ url_for('admin.dashboard') }}">
+            <span class="logo-dot">H</span>
+            <span><strong>Site dashboard</strong><small>Harith Firas · Mosul Tourism</small></span>
+        </a>
+        {% set ep = request.endpoint %}
+        {% set coll_now = request.view_args.coll if request.view_args else None %}
+        <nav class="side-nav">
+            <a href="{{ url_for('admin.dashboard') }}" class="{{ 'active' if ep == 'admin.dashboard' }}">Overview</a>
+            <a href="{{ url_for('admin.settings') }}" class="{{ 'active' if ep == 'admin.settings' }}">Site settings &amp; hero</a>
+            <a href="{{ url_for('admin.sections') }}" class="{{ 'active' if ep in ('admin.sections', 'admin.section_edit') }}">Sections &amp; order</a>
+            <p class="side-label">Content</p>
+            {% for key in ['services', 'hotels', 'landmarks', 'gallery', 'custom_sections'] %}
+            <a href="{{ url_for('admin.collection', coll=key) }}" class="{{ 'active' if coll_now == key }}">{{ COLLECTIONS[key].label }}</a>
+            {% endfor %}
+            <p class="side-label">Small lists</p>
+            {% for key in ['hero_facts', 'gallery_filters', 'social_links'] %}
+            <a href="{{ url_for('admin.collection', coll=key) }}" class="{{ 'active' if coll_now == key }}">{{ COLLECTIONS[key].label }}</a>
+            {% endfor %}
+            <p class="side-label">System</p>
+            <a href="{{ url_for('admin.media') }}" class="{{ 'active' if ep == 'admin.media' }}">Media library</a>
+            <a href="{{ url_for('admin.users') }}" class="{{ 'active' if ep == 'admin.users' }}">Users &amp; password</a>
+            <a href="{{ url_for('admin.backup') }}" class="{{ 'active' if ep == 'admin.backup' }}">Backup &amp; restore</a>
+        </nav>
+        <div class="side-foot">
+            <a class="btn btn-ghost" href="{{ url_for('home') }}" target="_blank" rel="noopener">View website ↗</a>
+            <form method="post" action="{{ url_for('admin.logout') }}">
+                <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+                <button class="btn btn-link" type="submit">Log out {{ session.user }}</button>
+            </form>
+        </div>
+    </aside>
+    <div class="main">
+        <header class="topbar">
+            <button class="side-toggle" type="button" aria-controls="sidebar" aria-expanded="false">☰ Menu</button>
+            <div class="crumbs">{% block crumbs %}{% endblock %}</div>
+            <div class="top-actions">{% block actions %}{% endblock %}</div>
+        </header>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flashes">
+            {% for category, message in messages %}<div class="flash flash-{{ category }}">{{ message }}</div>{% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+        <main class="content">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+</div>
+
+<div class="picker" id="picker" hidden>
+    <div class="picker-box" role="dialog" aria-modal="true" aria-labelledby="picker-title">
+        <header>
+            <h2 id="picker-title">Choose from media library</h2>
+            <input type="search" id="picker-search" placeholder="Filter by name…">
+            <button type="button" class="btn btn-ghost" data-picker-close>Close</button>
+        </header>
+        <div class="picker-grid" id="picker-grid"><p class="muted">Loading…</p></div>
+    </div>
+</div>
+<script>window.MEDIA_URL = "{{ url_for('admin.media_json') }}"; window.STATIC_URL = "{{ url_for('static', filename='') }}";</script>
+<script src="{{ url_for('static', filename='admin/admin.js') }}" defer></script>
+{% endblock %}
+</body>
+</html>

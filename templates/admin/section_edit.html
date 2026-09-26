@@ -1,0 +1,20 @@
+{% extends "admin/base.html" %}
+{% from "admin/_fields.html" import field, form_buttons %}
+{% block title %}{{ name }}{% endblock %}
+{% block crumbs %}<a href="{{ url_for('admin.sections') }}">Sections</a> / {{ name }}{% endblock %}
+{% block actions %}
+{% if related %}<a class="btn btn-ghost" href="{{ url_for('admin.collection', coll=related) }}">Manage {{ COLLECTIONS[related].label | lower }} →</a>{% endif %}
+<a class="btn btn-ghost" href="{{ url_for('home') }}#{{ key }}" target="_blank" rel="noopener">View ↗</a>
+{% endblock %}
+{% block content %}
+<form method="post" enctype="multipart/form-data" class="edit-form">
+    <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+    {% for block in blocks %}
+    <fieldset class="panel">
+        <legend>{{ block.title }}</legend>
+        {% for f in block.fields %}{{ field(f, block.data, block.prefix) }}{% endfor %}
+    </fieldset>
+    {% endfor %}
+    {{ form_buttons() }}
+</form>
+{% endblock %}

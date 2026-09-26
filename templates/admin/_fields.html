@@ -1,0 +1,103 @@
+{% macro field(f, data, prefix='') -%}
+{% set name = prefix ~ f.name %}
+{% set kind = f.kind %}
+<div class="field field-{{ kind }}">
+    {% if kind == 'bool' %}
+    <label class="switch">
+        <input type="checkbox" name="{{ name }}" {{ 'checked' if data.get(f.name, true) }}>
+        <span class="switch-ui"></span>
+        <span>{{ f.label }}</span>
+    </label>
+    {% else %}
+    <label class="field-label"{% if kind in ('text', 'url', 'number', 'select') %} for="{{ name }}"{% endif %}>{{ f.label }}</label>
+    {% if f.help %}<p class="help">{{ f.help }}</p>{% endif %}
+
+    {% if kind in ('i18n', 'i18n_area', 'i18n_lines') %}
+    <div class="i18n-pair">
+        {% for lang, lang_label, direction in [('ar', 'العربية', 'rtl'), ('en', 'English', 'ltr')] %}
+        {% set value = data.get(f.name ~ '_' ~ lang, '') %}
+        <label class="i18n-col">
+            <span class="lang-tag">{{ lang_label }}</span>
+            {% if kind == 'i18n' %}
+            <input type="text" name="{{ name }}_{{ lang }}" value="{{ value }}" dir="{{ direction }}">
+            {% else %}
+            <textarea name="{{ name }}_{{ lang }}" dir="{{ direction }}" rows="{{ 5 if kind == 'i18n_lines' else 4 }}">{{ value | join('\n') if value is not string else value }}</textarea>
+            {% endif %}
+        </label>
+        {% endfor %}
+    </div>
+
+    {% elif kind == 'textarea' %}
+    <textarea id="{{ name }}" name="{{ name }}" rows="4">{{ data.get(f.name, '') }}</textarea>
+
+    {% elif kind == 'lines' %}
+    <textarea id="{{ name }}" name="{{ name }}" rows="4">{{ data.get(f.name, []) | join('\n') }}</textarea>
+
+    {% elif kind == 'number' %}
+    <input type="number" id="{{ name }}" name="{{ name }}" value="{{ data.get(f.name, 0) }}"{% if f.min is defined %} min="{{ f.min }}"{% endif %}{% if f.max is defined %} max="{{ f.max }}"{% endif %}>
+
+    {% elif kind == 'select' %}
+    <select id="{{ name }}" name="{{ name }}">
+        {% for value, label in f.options %}
+        <option value="{{ value }}" {{ 'selected' if data.get(f.name) == value }}>{{ label }}</option>
+        {% endfor %}
+    </select>
+
+    {% elif kind == 'image' %}
+    {% set value = data.get(f.name, '') %}
+    <div class="image-field" data-image-field>
+        <div class="image-preview">
+            {% if value %}<img src="{{ media(value) }}" alt="">{% else %}<span class="muted">No image</span>{% endif %}
+        </div>
+        <div class="image-controls">
+            <label class="dropzone small">
+                <input type="file" name="{{ name }}__file" accept="image/*" data-preview-single>
+                <span>⬆ Upload new image <small>(click or drop)</small></span>
+            </label>
+            <div class="row">
+                <button type="button" class="btn btn-ghost" data-pick-single>Choose from library</button>
+                <button type="button" class="btn btn-link danger" data-clear-image>Remove</button>
+            </div>
+            <input type="text" class="path-input" name="{{ name }}" value="{{ value }}" placeholder="images/… or uploads/… or https://…" aria-label="{{ f.label }} path">
+        </div>
+    </div>
+
+    {% elif kind == 'images' %}
+    {% set values = data.get(f.name, []) %}
+    <div class="images-field" data-images-field data-name="{{ name }}__keep">
+        <div class="thumb-list" data-thumb-list>
+            {% for path in values %}
+            <div class="thumb" draggable="true">
+                <img src="{{ media(path) }}" alt="">
+                <input type="hidden" name="{{ name }}__keep" value="{{ path }}">
+                <div class="thumb-tools">
+                    <button type="button" data-move="-1" title="Move left">‹</button>
+                    <button type="button" data-move="1" title="Move right">›</button>
+                    <button type="button" data-remove title="Remove">×</button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <p class="muted empty-note"{% if values %} hidden{% endif %}>No photos yet.</p>
+        <label class="dropzone">
+            <input type="file" name="{{ name }}__files" accept="image/*" multiple data-preview-multi>
+            <span>⬆ Bulk upload photos <small>(select or drop many at once)</small></span>
+        </label>
+        <div class="pending-previews" data-pending></div>
+        <button type="button" class="btn btn-ghost" data-pick-multi>Add from library</button>
+    </div>
+
+    {% else %}
+    <input type="{{ 'url' if kind == 'url' else 'text' }}" id="{{ name }}" name="{{ name }}" value="{{ data.get(f.name, '') }}"{% if f.datalist %} list="{{ f.datalist }}"{% endif %}>
+    {% endif %}
+    {% endif %}
+</div>
+{%- endmacro %}
+
+{% macro form_buttons(then_new=false) -%}
+<div class="form-bar">
+    <button class="btn btn-primary" type="submit">Save changes</button>
+    {% if then_new %}<button class="btn btn-ghost" type="submit" name="then" value="new">Save &amp; add another</button>{% endif %}
+    <span class="muted form-hint">Changes appear on the website immediately after saving.</span>
+</div>
+{%- endmacro %}

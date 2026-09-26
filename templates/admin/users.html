@@ -1,0 +1,33 @@
+{% extends "admin/base.html" %}
+{% block title %}Users{% endblock %}
+{% block crumbs %}Users &amp; password{% endblock %}
+{% block content %}
+<div class="two-col">
+    <section class="panel">
+        <h2>Dashboard users</h2>
+        <ul class="item-list">
+            {% for user in users %}
+            <li class="item-row">
+                <div class="item-name"><strong>{{ user.username }}</strong>{% if user.username == session.user %}<span class="badge">you</span>{% endif %}</div>
+                <div class="row-tools">
+                    <form method="post">
+                        <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+                        <input type="hidden" name="username" value="{{ user.username }}">
+                        <button class="btn btn-danger small" name="action" value="delete" data-confirm="Delete user {{ user.username }}?">Delete</button>
+                    </form>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
+    <form class="panel" method="post">
+        <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+        <h2>Add a user or change a password</h2>
+        <p class="muted">Enter an existing username to change its password, or a new username to add a user.</p>
+        <div class="field"><label class="field-label">Username<input name="username" value="{{ session.user }}" required autocomplete="off"></label></div>
+        <div class="field"><label class="field-label">New password<input type="password" name="password" required autocomplete="new-password"></label></div>
+        <div class="field"><label class="field-label">Repeat password<input type="password" name="confirm" required autocomplete="new-password"></label></div>
+        <button class="btn btn-primary" name="action" value="save">Save</button>
+    </form>
+</div>
+{% endblock %}

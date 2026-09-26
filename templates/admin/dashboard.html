@@ -1,0 +1,48 @@
+{% extends "admin/base.html" %}
+{% block title %}Overview{% endblock %}
+{% block crumbs %}Overview{% endblock %}
+{% block content %}
+<section class="welcome">
+    <div>
+        <h1>Welcome, {{ session.user }} 👋</h1>
+        <p class="muted">Everything on the website can be edited from here — texts in Arabic and English, images, photo galleries, sections and their order.</p>
+    </div>
+    <a class="btn btn-primary" href="{{ url_for('home') }}" target="_blank" rel="noopener">Open the website ↗</a>
+</section>
+
+<div class="stat-grid">
+    {% for key in ['services', 'hotels', 'landmarks', 'gallery', 'custom_sections'] %}
+    <a class="stat" href="{{ url_for('admin.collection', coll=key) }}">
+        <strong>{{ counts[key] }}</strong>
+        <span>{{ COLLECTIONS[key].label }}</span>
+    </a>
+    {% endfor %}
+    <a class="stat" href="{{ url_for('admin.media') }}"><strong>{{ media_count }}</strong><span>Images in library</span></a>
+</div>
+
+<h2 class="block-title">Quick actions</h2>
+<div class="card-grid">
+    <a class="card-link" href="{{ url_for('admin.section_edit', key='trip') }}"><strong>Update the latest trip</strong><span>Poster, dates, prices and WhatsApp message</span></a>
+    <a class="card-link" href="{{ url_for('admin.collection', coll='gallery') }}#bulk"><strong>Bulk upload gallery photos</strong><span>Drop many photos at once, then write captions</span></a>
+    <a class="card-link" href="{{ url_for('admin.item_edit', coll='hotels') }}"><strong>Add a hotel</strong><span>Name, stars, price, photos and booking link</span></a>
+    <a class="card-link" href="{{ url_for('admin.item_edit', coll='landmarks') }}"><strong>Add a landmark</strong><span>Photo, story and image credit</span></a>
+    <a class="card-link" href="{{ url_for('admin.item_edit', coll='custom_sections') }}"><strong>Add a new section</strong><span>Any title, text, image and photo grid</span></a>
+    <a class="card-link" href="{{ url_for('admin.settings') }}"><strong>Edit hero &amp; brand</strong><span>Top banner, titles, logo and SEO</span></a>
+    <a class="card-link" href="{{ url_for('admin.sections') }}"><strong>Reorder / hide sections</strong><span>Choose what appears and in which order</span></a>
+    <a class="card-link" href="{{ url_for('admin.users') }}"><strong>Change password</strong><span>Manage who can log in</span></a>
+</div>
+
+<h2 class="block-title">Current page order</h2>
+<ol class="order-preview">
+    <li>Hero banner</li>
+    {% for key in content.layout %}
+    {% if key.startswith('custom:') %}
+        {% set item = content.custom_sections | selectattr('id', 'equalto', key[7:]) | first %}
+        {% if item %}<li class="{{ '' if item.visible else 'is-hidden' }}">{{ item.title_en or item.title_ar or 'Custom section' }} <em>custom</em></li>{% endif %}
+    {% else %}
+        <li class="{{ '' if content.sections[key].visible else 'is-hidden' }}">{{ BUILTIN_SECTIONS[key] }}</li>
+    {% endif %}
+    {% endfor %}
+    <li>Footer</li>
+</ol>
+{% endblock %}

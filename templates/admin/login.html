@@ -1,0 +1,20 @@
+{% extends "admin/base.html" %}
+{% block title %}Log in{% endblock %}
+{% block body_class %}login-page{% endblock %}
+{% block body %}
+<main class="login-wrap">
+    <form class="login-card" method="post">
+        <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+        <span class="logo-dot big">H</span>
+        <h1>Site dashboard</h1>
+        <p class="muted">Harith Firas · Mosul Tourism</p>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}<div class="flash flash-{{ category }}">{{ message }}</div>{% endfor %}
+        {% endwith %}
+        <label>Username<input name="username" autocomplete="username" required autofocus></label>
+        <label>Password<input type="password" name="password" autocomplete="current-password" required></label>
+        <button class="btn btn-primary wide" type="submit">Log in</button>
+        <a class="muted small" href="{{ url_for('home') }}">← Back to website</a>
+    </form>
+</main>
+{% endblock %}

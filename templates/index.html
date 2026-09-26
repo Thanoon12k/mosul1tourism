@@ -1,18 +1,33 @@
 {% macro tr(ar, en) -%}<span class="lang-ar">{{ ar }}</span><span class="lang-en">{{ en }}</span>{%- endmacro %}
+{% macro thumbs(images, group, alt_ar, alt_en) -%}
+{% if images %}
+<div class="photo-thumbs" role="list">
+    {% for image in images %}
+    <button class="lb-thumb" type="button" role="listitem" data-group="{{ group }}" data-alt-ar="{{ alt_ar }}" data-alt-en="{{ alt_en }}" aria-label="{{ alt_en }} {{ loop.index }}">
+        <img src="{{ media(image) }}" alt="" loading="lazy">
+    </button>
+    {% endfor %}
+</div>
+{% endif %}
+{%- endmacro %}
+{% set s = c.settings %}
 <!doctype html>
-<html lang="en" dir="ltr">
+<html lang="{{ s.default_language }}" dir="{{ 'rtl' if s.default_language == 'ar' else 'ltr' }}"
+      data-default-lang="{{ s.default_language }}"
+      data-title-ar="{{ s.site_title_ar }}" data-title-en="{{ s.site_title_en }}"
+      data-desc-ar="{{ s.meta_description_ar }}" data-desc-en="{{ s.meta_description_en }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#08182f">
-    <meta name="description" content="Harith Firas Mosul Tourism — guided tours, Hajj and Umrah journeys, and selected hotel booking in Mosul.">
+    <meta name="description" content="{{ s.meta_description_en }}">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Mosul, a City of Tourism | Harith Firas">
-    <meta property="og:description" content="Explore Mosul and its heritage with a local guide and direct WhatsApp travel services.">
-    <meta property="og:image" content="{{ url_for('static', filename='images/brand-cover.jpg', _external=True) }}">
-    <title>Mosul, a City of Tourism | Harith Firas</title>
-    <link rel="icon" href="{{ url_for('static', filename='images/harith-profile.jpg') }}">
-    <link rel="preload" as="image" href="{{ url_for('static', filename='images/mosul/al-nuri-2025.jpg') }}">
+    <meta property="og:title" content="{{ s.site_title_en }}">
+    <meta property="og:description" content="{{ s.meta_description_en }}">
+    {% if s.share_image %}<meta property="og:image" content="{{ url_for('static', filename=s.share_image, _external=True) if not s.share_image.startswith('http') else s.share_image }}">{% endif %}
+    <title>{{ s.site_title_en }}</title>
+    <link rel="icon" href="{{ media(s.logo_image) }}">
+    <link rel="preload" as="image" href="{{ media(s.hero_image) }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body id="top">
@@ -20,11 +35,11 @@
 
     <header class="site-header">
         <div class="nav-wrap">
-            <a class="brand" href="#main" aria-label="حارث فراس السياحة في الموصل">
-                <img src="{{ url_for('static', filename='images/harith-profile.jpg') }}" alt="حارث فراس" width="52" height="52">
+            <a class="brand" href="#main" aria-label="{{ s.brand_name_ar }} {{ s.brand_tagline_ar }}">
+                <img src="{{ media(s.logo_image) }}" alt="{{ s.brand_name_ar }}" width="52" height="52">
                 <span>
-                    <strong>{{ tr('حارث فراس', 'Harith Firas') }}</strong>
-                    <small>{{ tr('السياحة في الموصل', 'Mosul Tourism') }}</small>
+                    <strong>{{ tr(s.brand_name_ar, s.brand_name_en) }}</strong>
+                    <small>{{ tr(s.brand_tagline_ar, s.brand_tagline_en) }}</small>
                 </span>
             </a>
 
@@ -34,19 +49,17 @@
             </button>
 
             <nav class="main-nav" id="main-nav" aria-label="التنقل الرئيسي">
-                <a href="#services">{{ tr('الخدمات', 'Services') }}</a>
-                <a href="#hotels">{{ tr('الفنادق', 'Hotels') }}</a>
-                <a href="#landmarks">{{ tr('معالم الموصل', 'Landmarks') }}</a>
-                <a href="#gallery">{{ tr('الصور', 'Gallery') }}</a>
-                <a href="#about">{{ tr('عن حارث', 'About') }}</a>
+                {% for block in c.nav %}
+                <a href="#{{ block.anchor }}">{{ tr(block.data.nav_ar, block.data.nav_en) }}</a>
+                {% endfor %}
             </nav>
 
             <div class="nav-actions">
-                <button class="language-toggle" id="language-toggle" type="button" aria-label="Switch to English">
+                <button class="language-toggle" id="language-toggle" type="button" aria-label="Switch language">
                     <span class="lang-ar">EN</span><span class="lang-en">العربية</span>
                 </button>
-                <a class="nav-whatsapp" data-href-ar="https://wa.me/9647726443352?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%20%D8%AD%D8%A7%D8%B1%D8%AB%D8%8C%20%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%AE%D8%AF%D9%85%D8%A7%D8%AA%D9%83." data-href-en="https://wa.me/9647726443352?text=Hello%20Harith%2C%20I%20would%20like%20to%20ask%20about%20your%20services." href="https://wa.me/9647726443352" target="_blank" rel="noopener">
-                    {{ tr('تواصل الآن', 'Contact now') }}
+                <a class="nav-whatsapp" data-href-ar="{{ c.links.header_ar }}" data-href-en="{{ c.links.header_en }}" href="{{ c.links.header_en }}" target="_blank" rel="noopener">
+                    {{ tr(s.header_button_ar, s.header_button_en) }}
                 </a>
             </div>
         </div>
@@ -54,96 +67,97 @@
 
     <main id="main">
         <section class="hero" aria-labelledby="hero-title">
-            <img class="hero-image" src="{{ url_for('static', filename='images/mosul/al-nuri-2025.jpg') }}" alt="جامع النوري في الموصل" fetchpriority="high">
+            <img class="hero-image" src="{{ media(s.hero_image) }}" alt="{{ s.hero_title1_ar }}" fetchpriority="high">
             <div class="hero-shade"></div>
             <div class="heritage-motif" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
             <div class="hero-content">
                 <p class="eyebrow">
                     <span class="eyebrow-mark"></span>
-                    {{ tr('حارث فراس · مرشد سياحي من الموصل', 'Harith Firas · Local tour guide from Mosul') }}
+                    {{ tr(s.hero_eyebrow_ar, s.hero_eyebrow_en) }}
                 </p>
                 <h1 id="hero-title">
-                    <span>{{ tr('الموصل', 'Mosul,') }}</span>
-                    <em>{{ tr('مدينة سياحية', 'a City of Tourism') }}</em>
+                    <span>{{ tr(s.hero_title1_ar, s.hero_title1_en) }}</span>
+                    <em>{{ tr(s.hero_title2_ar, s.hero_title2_en) }}</em>
                 </h1>
-                <p class="hero-lead">
-                    {{ tr('مدينةٌ من حجرٍ وذاكرة، يمرّ دجلة في قلبها وتلتقي في أزقتها حضارات نينوى. تعرّف إليها مع شخص يعرف حكاياتها.', 'A city of stone and memory, with the Tigris at its heart and the civilizations of Nineveh in its streets. Explore it with someone who knows its stories.') }}
-                </p>
+                <p class="hero-lead">{{ tr(s.hero_lead_ar, s.hero_lead_en) }}</p>
                 <div class="hero-actions">
-                    <a class="button button-primary" href="#landmarks">{{ tr('اكتشف معالم الموصل', 'Explore Mosul landmarks') }} <span aria-hidden="true">←</span></a>
-                    <a class="button button-ghost" href="#services">{{ tr('اختر خدمتك', 'Choose a service') }}</a>
+                    {% if s.hero_button1_en or s.hero_button1_ar %}<a class="button button-primary" href="{{ s.hero_button1_link or '#' }}">{{ tr(s.hero_button1_ar, s.hero_button1_en) }} <span aria-hidden="true">←</span></a>{% endif %}
+                    {% if s.hero_button2_en or s.hero_button2_ar %}<a class="button button-ghost" href="{{ s.hero_button2_link or '#' }}">{{ tr(s.hero_button2_ar, s.hero_button2_en) }}</a>{% endif %}
                 </div>
             </div>
+            {% if c.hero_facts %}
             <div class="hero-facts" aria-label="معلومات سريعة">
-                <div><strong>77K+</strong><span>{{ tr('متابع على فيسبوك', 'Facebook followers') }}</span></div>
-                <div><strong>03</strong><span>{{ tr('مجموعات خدمات واضحة', 'Clear service groups') }}</span></div>
-                <div><strong>AR / EN</strong><span>{{ tr('خدمة بالعربية والإنكليزية', 'Arabic & English service') }}</span></div>
+                {% for fact in c.hero_facts %}
+                <div><strong>{{ fact.value }}</strong><span>{{ tr(fact.label_ar, fact.label_en) }}</span></div>
+                {% endfor %}
             </div>
-            <a class="scroll-cue" href="#trip"><span></span>{{ tr('اكتشف', 'Explore') }}</a>
+            {% endif %}
+            {% if c.blocks %}<a class="scroll-cue" href="#{{ c.blocks[0].anchor }}"><span></span>{{ tr(s.hero_scroll_ar, s.hero_scroll_en) }}</a>{% endif %}
         </section>
 
-        <section class="latest-trip section" id="trip">
+        {% for block in c.blocks %}
+        {% set sec = block.data %}
+        {% set index_label %}<p class="section-index">{{ block.number }} / {{ tr(sec.label_ar, sec.label_en) }}</p>{% endset %}
+
+        {% if block.type == 'trip' %}
+        {% set trip = c.trip %}
+        <section class="latest-trip section" id="{{ block.anchor }}">
             <div class="section-shell trip-layout">
                 <figure class="trip-poster reveal">
-                    <img src="{{ url_for('static', filename='images/poster-jeddah-gulf-cup.jpg') }}" alt="بوستر رحلة العمرة وكأس الخليج في جدة" loading="lazy">
-                    <figcaption>{{ tr('أحدث برنامج منشور على صفحة حارث', 'Latest program published on Harith’s page') }}</figcaption>
+                    <img src="{{ media(trip.image) }}" alt="{{ sec.title_ar }}" data-alt-ar="{{ sec.title_ar }}" data-alt-en="{{ sec.title_en }}" loading="lazy">
+                    <figcaption>{{ tr(trip.caption_ar, trip.caption_en) }}</figcaption>
                 </figure>
                 <div class="trip-copy reveal">
-                    <p class="section-index">01 / {{ tr('الرحلة الأحدث', 'Latest journey') }}</p>
-                    <div class="status-line"><span></span>{{ tr('الحجز والاستفسار متاحان عبر واتساب', 'Booking and enquiries available on WhatsApp') }}</div>
-                    <h2>{{ tr('عمرة من الموصل + كأس الخليج في جدة', 'Umrah from Mosul + Gulf Cup in Jeddah') }}</h2>
-                    <p class="trip-date">{{ tr('الانطلاق 19 / 09 / 2026', 'Departure · 19 September 2026') }}</p>
+                    {{ index_label }}
+                    {% if trip.status_ar or trip.status_en %}<div class="status-line"><span></span>{{ tr(trip.status_ar, trip.status_en) }}</div>{% endif %}
+                    <h2>{{ tr(sec.title_ar, sec.title_en) }}</h2>
+                    {% if trip.date_ar or trip.date_en %}<p class="trip-date">{{ tr(trip.date_ar, trip.date_en) }}</p>{% endif %}
+                    {% if sec.intro_ar or sec.intro_en %}<p>{{ tr(sec.intro_ar, sec.intro_en) }}</p>{% endif %}
                     <div class="trip-details">
-                        <div><strong>10</strong><span>{{ tr('ليالٍ: 8 مكة + 2 المدينة', 'nights: 8 Makkah + 2 Madinah') }}</span></div>
-                        <div><strong>650,000</strong><span>{{ tr('دينار عراقي قبل فئة تذكرة المباراة', 'IQD before match-ticket category') }}</span></div>
+                        {% if trip.detail1_value %}<div><strong>{{ trip.detail1_value }}</strong><span>{{ tr(trip.detail1_ar, trip.detail1_en) }}</span></div>{% endif %}
+                        {% if trip.detail2_value %}<div><strong>{{ trip.detail2_value }}</strong><span>{{ tr(trip.detail2_ar, trip.detail2_en) }}</span></div>{% endif %}
                     </div>
                     <ul class="check-list">
-                        <li>{{ tr('التأشيرة والنقل البري من الموصل والفنادق', 'Visa, overland transport from Mosul and hotels') }}</li>
-                        <li>{{ tr('تنقلات مكة والمدينة والملعب والزيارات الدينية', 'Makkah, Madinah, stadium transfers and religious visits') }}</li>
-                        <li>{{ tr('فئات تذاكر المباراة تبدأ من 20,000 إلى 55,000 دينار', 'Match-ticket categories range from 20,000 to 55,000 IQD') }}</li>
+                        {% for ar, en in pairs(trip.bullets_ar, trip.bullets_en) %}<li>{{ tr(ar, en) }}</li>{% endfor %}
                     </ul>
-                    <a class="button button-whatsapp wa-service" data-href-ar="{{ current_trip.wa_ar }}" data-href-en="{{ current_trip.wa_en }}" href="{{ current_trip.wa_ar }}" target="_blank" rel="noopener">
-                        <span class="wa-dot" aria-hidden="true"></span>{{ tr('احجز هذه الرحلة عبر واتساب', 'Book this journey on WhatsApp') }}
+                    {{ thumbs(trip.images, 'trip', sec.title_ar, sec.title_en) }}
+                    <a class="button button-whatsapp wa-service" data-href-ar="{{ trip.wa_ar }}" data-href-en="{{ trip.wa_en }}" href="{{ trip.wa_en }}" target="_blank" rel="noopener">
+                        <span class="wa-dot" aria-hidden="true"></span>{{ tr(trip.button_ar, trip.button_en) }}
                     </a>
-                    <p class="micro-note">{{ tr('مكتب نسك للحج والعمرة · الموصل · تقاطع الأسدي قرب مركز ابن الهيثم للعيون', 'Nusk Hajj & Umrah Office · Mosul · Al-Asadi intersection near Ibn Al-Haytham Eye Center') }}</p>
+                    {% if trip.note_ar or trip.note_en %}<p class="micro-note">{{ tr(trip.note_ar, trip.note_en) }}</p>{% endif %}
                 </div>
             </div>
         </section>
 
-        <section class="services section section-dark" id="services">
+        {% elif block.type == 'services' %}
+        <section class="services section section-dark" id="{{ block.anchor }}">
             <div class="section-shell">
                 <header class="section-heading reveal">
-                    <p class="section-index">02 / {{ tr('الخدمات', 'Services') }}</p>
-                    <h2>{{ tr('ثلاث طرق لتبدأ رحلتك', 'Three ways to begin your journey') }}</h2>
-                    <p>{{ tr('اختر الخدمة، وستفتح رسالة واتساب جاهزة بالتفاصيل الأساسية لتكمل طلبك مباشرة.', 'Choose a service and a ready-to-complete WhatsApp message will open with the essential details.') }}</p>
+                    {{ index_label }}
+                    <h2>{{ tr(sec.title_ar, sec.title_en) }}</h2>
+                    <p>{{ tr(sec.intro_ar, sec.intro_en) }}</p>
                 </header>
-
                 <div class="service-list">
-                    {% for service in services %}
-                    <article class="service-row reveal" id="service-{{ service.slug }}">
+                    {% for service in c.services %}
+                    <article class="service-row reveal" id="service-{{ service.id }}">
                         <div class="service-photo">
-                            <img src="{{ url_for('static', filename='images/' + service.image) }}" alt="{{ service.title_ar }}" loading="lazy">
-                            <span>{{ service.number }}</span>
+                            <img src="{{ media(service.image) }}" alt="{{ service.title_ar }}" data-alt-ar="{{ service.title_ar }}" data-alt-en="{{ service.title_en }}" loading="lazy">
+                            <span>{{ '%02d' % loop.index }}</span>
                         </div>
                         <div class="service-content">
-                            <p class="service-label">{{ tr('خدمة رئيسية', 'Core service') }} · {{ service.number }}</p>
+                            <p class="service-label">{{ tr('خدمة رئيسية', 'Core service') }} · {{ '%02d' % loop.index }}</p>
                             <h3>{{ tr(service.title_ar, service.title_en) }}</h3>
                             <p>{{ tr(service.summary_ar, service.summary_en) }}</p>
                             <ul>
-                                {% for feature in service.features_ar %}
-                                <li>{{ tr(feature, service.features_en[loop.index0]) }}</li>
-                                {% endfor %}
+                                {% for ar, en in pairs(service.features_ar, service.features_en) %}<li>{{ tr(ar, en) }}</li>{% endfor %}
                             </ul>
+                            {{ thumbs(service.images, 'service-' ~ service.id, service.title_ar, service.title_en) }}
                             <div class="service-contact">
-                                <span>{{ tr('رقم التواصل', 'Contact') }} <bdi>{{ service.phone }}</bdi>{% if service.secondary_phone %} · <bdi>{{ service.secondary_phone }}</bdi>{% endif %}</span>
-                                {% if service.slug == 'hotels' %}
-                                <a class="text-link" href="#hotels">
-                                    {{ tr('اعرض الفنادق المتاحة', 'View available hotels') }} <span aria-hidden="true">↓</span>
-                                </a>
-                                {% else %}
-                                <a class="text-link wa-service" data-href-ar="{{ service.wa_ar }}" data-href-en="{{ service.wa_en }}" href="{{ service.wa_ar }}" target="_blank" rel="noopener">
-                                    {{ tr('اكتب تفاصيل طلبك', 'Send your request') }} <span aria-hidden="true">↗</span>
-                                </a>
+                                {% if service.phone %}<span>{{ tr('رقم التواصل', 'Contact') }} <bdi>{{ service.phone }}</bdi>{% if service.secondary_phone %} · <bdi>{{ service.secondary_phone }}</bdi>{% endif %}</span>{% endif %}
+                                {% if service.link_url %}
+                                <a class="text-link" href="{{ service.link_url }}">{{ tr(service.button_ar, service.button_en) }} <span aria-hidden="true">↓</span></a>
+                                {% elif service.whatsapp %}
+                                <a class="text-link wa-service" data-href-ar="{{ service.wa_ar }}" data-href-en="{{ service.wa_en }}" href="{{ service.wa_en }}" target="_blank" rel="noopener">{{ tr(service.button_ar, service.button_en) }} <span aria-hidden="true">↗</span></a>
                                 {% endif %}
                             </div>
                         </div>
@@ -153,27 +167,28 @@
             </div>
         </section>
 
-        <section class="landmarks section" id="landmarks">
+        {% elif block.type == 'landmarks' %}
+        <section class="landmarks section" id="{{ block.anchor }}">
             <div class="section-shell">
                 <header class="section-heading split-heading reveal">
                     <div>
-                        <p class="section-index">03 / {{ tr('معالم الموصل', 'Mosul landmarks') }}</p>
-                        <h2>{{ tr('كل زاوية تحمل حكاية', 'Every corner holds a story') }}</h2>
+                        {{ index_label }}
+                        <h2>{{ tr(sec.title_ar, sec.title_en) }}</h2>
                     </div>
-                    <p>{{ tr('صور حقيقية من المدينة ومواقعها التاريخية؛ يستطيع حارث ترتيب مسار يضم المعالم التي تختارها.', 'Real photographs from the city and its historic sites. Harith can arrange a route around the landmarks you choose.') }}</p>
+                    <p>{{ tr(sec.intro_ar, sec.intro_en) }}</p>
                 </header>
-
                 <div class="landmark-grid">
-                    {% for landmark in landmarks %}
+                    {% for landmark in c.landmarks %}
                     <article class="landmark-card reveal landmark-{{ loop.index }}">
                         <div class="landmark-image">
-                            <img src="{{ url_for('static', filename='images/' + landmark.image) }}" alt="{{ landmark.title_ar }}" data-alt-ar="{{ landmark.title_ar }}" data-alt-en="{{ landmark.title_en }}" loading="lazy">
+                            <img src="{{ media(landmark.image) }}" alt="{{ landmark.title_ar }}" data-alt-ar="{{ landmark.title_ar }}" data-alt-en="{{ landmark.title_en }}" loading="lazy">
                             <span>{{ '%02d' % loop.index }}</span>
                         </div>
                         <div class="landmark-copy">
                             <p>{{ tr(landmark.kicker_ar, landmark.kicker_en) }}</p>
                             <h3>{{ tr(landmark.title_ar, landmark.title_en) }}</h3>
                             <p>{{ tr(landmark.description_ar, landmark.description_en) }}</p>
+                            {{ thumbs(landmark.images, 'landmark-' ~ landmark.id, landmark.title_ar, landmark.title_en) }}
                         </div>
                     </article>
                     {% endfor %}
@@ -181,26 +196,27 @@
             </div>
         </section>
 
-        <section class="hotels section section-dark" id="hotels">
+        {% elif block.type == 'hotels' %}
+        <section class="hotels section section-dark" id="{{ block.anchor }}">
             <div class="section-shell">
                 <header class="section-heading split-heading reveal">
                     <div>
-                        <p class="section-index">04 / {{ tr('فنادق الموصل', 'Mosul hotels') }}</p>
-                        <h2>{{ tr('اختر إقامتك في المدينة', 'Choose your stay in the city') }}</h2>
+                        {{ index_label }}
+                        <h2>{{ tr(sec.title_ar, sec.title_en) }}</h2>
                     </div>
-                    <p>{{ tr('خمسة خيارات أولية بصورها وتصنيفاتها ومواقعها. اختر الفندق المناسب، وسيفتح واتساب برسالة حجز جاهزة.', 'Five starter options with photos, categories and locations. Choose a hotel to open a ready-to-complete WhatsApp booking message.') }}</p>
+                    <p>{{ tr(sec.intro_ar, sec.intro_en) }}</p>
                 </header>
-
                 <div class="hotel-grid">
-                    {% for hotel in hotels %}
+                    {% for hotel in c.hotels %}
                     <article class="hotel-card reveal hotel-{{ loop.index }}">
                         <div class="hotel-image">
-                            <img src="{{ url_for('static', filename='images/' + hotel.image) }}" alt="{{ hotel.name_ar }}" loading="lazy">
+                            <img src="{{ media(hotel.image) }}" alt="{{ hotel.name_ar }}" data-alt-ar="{{ hotel.name_ar }}" data-alt-en="{{ hotel.name_en }}" loading="lazy">
                             <span class="hotel-number">{{ '%02d' % loop.index }}</span>
                         </div>
                         <div class="hotel-body">
                             <div class="hotel-meta">
-                                <p class="hotel-stars" aria-label="{{ hotel.stars }} stars"><span aria-hidden="true">{{ '★' * hotel.stars }}{{ '☆' * (5 - hotel.stars) }}</span></p>
+                                {% set stars = (hotel.stars or 0) | int %}
+                                <p class="hotel-stars" aria-label="{{ stars }} stars"><span aria-hidden="true">{{ '★' * stars }}{{ '☆' * (5 - stars) }}</span></p>
                                 <p class="hotel-rating">{{ tr(hotel.rating_ar, hotel.rating_en) }}</p>
                             </div>
                             <h3>{{ tr(hotel.name_ar, hotel.name_en) }}</h3>
@@ -210,46 +226,47 @@
                             </div>
                             <p class="hotel-summary">{{ tr(hotel.summary_ar, hotel.summary_en) }}</p>
                             <ul class="hotel-amenities">
-                                {% for amenity in hotel.amenities_ar %}
-                                <li>{{ tr(amenity, hotel.amenities_en[loop.index0]) }}</li>
-                                {% endfor %}
+                                {% for ar, en in pairs(hotel.amenities_ar, hotel.amenities_en) %}<li>{{ tr(ar, en) }}</li>{% endfor %}
                             </ul>
+                            {{ thumbs(hotel.images, 'hotel-' ~ hotel.id, hotel.name_ar, hotel.name_en) }}
                             <div class="hotel-actions">
-                                <a class="button button-whatsapp wa-service" data-href-ar="{{ hotel.wa_ar }}" data-href-en="{{ hotel.wa_en }}" href="{{ hotel.wa_ar }}" target="_blank" rel="noopener">
+                                {% if hotel.whatsapp %}
+                                <a class="button button-whatsapp wa-service" data-href-ar="{{ hotel.wa_ar }}" data-href-en="{{ hotel.wa_en }}" href="{{ hotel.wa_en }}" target="_blank" rel="noopener">
                                     <span class="wa-dot" aria-hidden="true"></span>{{ tr('استفسر عن الحجز', 'Ask about booking') }}
                                 </a>
-                                <a class="hotel-source" href="{{ hotel.source }}" target="_blank" rel="noopener">{{ tr('تفاصيل الفندق', 'Hotel details') }} ↗</a>
+                                {% endif %}
+                                {% if hotel.source %}<a class="hotel-source" href="{{ hotel.source }}" target="_blank" rel="noopener">{{ tr('تفاصيل الفندق', 'Hotel details') }} ↗</a>{% endif %}
                             </div>
                         </div>
                     </article>
                     {% endfor %}
                 </div>
-                <p class="hotel-note">{{ tr('الأسعار المذكورة تقديرية وقد تتغير حسب التاريخ ونوع الغرفة؛ يؤكَّد السعر والتوفر عبر واتساب قبل الحجز.', 'Rates are indicative and may vary by date and room type; price and availability are confirmed on WhatsApp before booking.') }}</p>
+                {% if sec.note_ar or sec.note_en %}<p class="hotel-note">{{ tr(sec.note_ar, sec.note_en) }}</p>{% endif %}
             </div>
         </section>
 
-        <section class="gallery section" id="gallery">
+        {% elif block.type == 'gallery' %}
+        <section class="gallery section" id="{{ block.anchor }}">
             <div class="section-shell">
                 <header class="section-heading split-heading reveal">
                     <div>
-                        <p class="section-index">05 / {{ tr('من رحلات حارث', 'From Harith’s journeys') }}</p>
-                        <h2>{{ tr('وجوه، مدن، وذكريات', 'People, cities & memories') }}</h2>
+                        {{ index_label }}
+                        <h2>{{ tr(sec.title_ar, sec.title_en) }}</h2>
                     </div>
-                    <p>{{ tr('صور وبوسترات من صفحة حارث على فيسبوك، من جولات العراق إلى إسطنبول ورحلات الملاعب.', 'Photos and posters from Harith’s Facebook page—from tours across Iraq to Istanbul and football journeys.') }}</p>
+                    <p>{{ tr(sec.intro_ar, sec.intro_en) }}</p>
                 </header>
-
+                {% if c.gallery_filters %}
                 <div class="gallery-filters reveal" role="group" aria-label="تصفية الصور">
                     <button class="is-active" type="button" data-filter="all">{{ tr('الكل', 'All') }}</button>
-                    <button type="button" data-filter="iraq">{{ tr('العراق والضيوف', 'Iraq & guests') }}</button>
-                    <button type="button" data-filter="turkey">{{ tr('تركيا', 'Türkiye') }}</button>
-                    <button type="button" data-filter="sports">{{ tr('الرياضة', 'Sports') }}</button>
-                    <button type="button" data-filter="posters">{{ tr('البوسترات', 'Posters') }}</button>
+                    {% for filter in c.gallery_filters %}
+                    <button type="button" data-filter="{{ filter.key }}">{{ tr(filter.label_ar, filter.label_en) }}</button>
+                    {% endfor %}
                 </div>
-
+                {% endif %}
                 <div class="photo-wall">
-                    {% for image in gallery_images %}
-                    <button class="gallery-item reveal" type="button" data-category="{{ image.category }}" data-alt-ar="{{ image.alt_ar }}" data-alt-en="{{ image.alt_en }}" aria-label="{{ image.alt_ar }}">
-                        <img src="{{ url_for('static', filename='images/gallery/' + image.file) }}" alt="{{ image.alt_ar }}" loading="lazy">
+                    {% for image in c.gallery %}
+                    <button class="gallery-item reveal" type="button" data-category="{{ image.category }}" data-alt-ar="{{ image.alt_ar }}" data-alt-en="{{ image.alt_en }}" aria-label="{{ image.alt_en }}">
+                        <img src="{{ media(image.image) }}" alt="{{ image.alt_en }}" loading="lazy">
                         <span><b>{{ '%02d' % loop.index }}</b><em>{{ tr(image.alt_ar, image.alt_en) }}</em></span>
                     </button>
                     {% endfor %}
@@ -257,72 +274,107 @@
             </div>
         </section>
 
-        <section class="about section" id="about">
+        {% elif block.type == 'about' %}
+        <section class="about section" id="{{ block.anchor }}">
             <div class="section-shell about-layout">
                 <div class="about-media reveal">
-                    <img class="about-cover" src="{{ url_for('static', filename='images/brand-cover.jpg') }}" alt="غلاف حارث فراس على فيسبوك" loading="lazy">
-                    <img class="about-portrait" src="{{ url_for('static', filename='images/harith-profile.jpg') }}" alt="حارث فراس" loading="lazy">
+                    <img class="about-cover" src="{{ media(s.about_cover) }}" alt="" loading="lazy">
+                    <img class="about-portrait" src="{{ media(s.about_portrait) }}" alt="{{ s.brand_name_ar }}" loading="lazy">
                 </div>
                 <div class="about-copy reveal">
-                    <p class="section-index">06 / {{ tr('عن حارث', 'About Harith') }}</p>
-                    <h2>{{ tr('موصليّ يعرّف العالم بمدينته', 'A Moslawi sharing his city with the world') }}</h2>
-                    <p>{{ tr('حارث فراس مرشد سياحي وصانع محتوى من الموصل. ترافقه خبرة ميدانية مع الضيوف العرب والأجانب وشغف بتقديم العراق كما يراه أهله: كريماً، متنوعاً، ومليئاً بالحكايات.', 'Harith Firas is a tour guide and content creator from Mosul. His on-the-ground experience with Arab and international guests is driven by a wish to present Iraq as locals know it: generous, diverse and full of stories.') }}</p>
+                    {{ index_label }}
+                    <h2>{{ tr(sec.title_ar, sec.title_en) }}</h2>
+                    <p class="pre-line">{{ tr(sec.intro_ar, sec.intro_en) }}</p>
                     <div class="about-signature">
-                        <strong>HARITH FIRAS</strong>
-                        <span>{{ tr('Tour guide · YouTuber', 'Tour guide · YouTuber') }}</span>
+                        <strong>{{ s.about_signature }}</strong>
+                        <span>{{ tr(s.about_role_ar, s.about_role_en) }}</span>
                     </div>
                     <div class="social-links">
-                        <a href="https://www.facebook.com/profile.php?id=100063651072840" target="_blank" rel="noopener">Facebook <span>↗</span></a>
-                        <a href="https://www.instagram.com/harfir1/" target="_blank" rel="noopener">Instagram <span>↗</span></a>
-                        <a href="https://youtube.com/channel/UC5_QzqI4Io-K4rwuiAQe_9w" target="_blank" rel="noopener">YouTube <span>↗</span></a>
-                        <a href="https://x.com/harithfiras3" target="_blank" rel="noopener">X <span>↗</span></a>
+                        {% for link in c.social_links %}
+                        <a href="{{ link.url }}" target="_blank" rel="noopener">{{ link.label }} <span>↗</span></a>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="contact section section-gold" id="contact">
+        {% elif block.type == 'contact' %}
+        <section class="contact section section-gold" id="{{ block.anchor }}">
             <div class="section-shell contact-layout reveal">
                 <div>
-                    <p class="section-index">07 / {{ tr('لنخطط الرحلة', 'Let’s plan the journey') }}</p>
-                    <h2>{{ tr('من أين تريد أن تبدأ؟', 'Where would you like to begin?') }}</h2>
-                    <p>{{ tr('التواصل والحجز حالياً عبر واتساب فقط. اضغط الزر واكتب تاريخك وعدد الضيوف والخدمة المطلوبة.', 'Enquiries and booking are currently handled on WhatsApp. Share your date, group size and requested service.') }}</p>
+                    {{ index_label }}
+                    <h2>{{ tr(sec.title_ar, sec.title_en) }}</h2>
+                    <p>{{ tr(sec.intro_ar, sec.intro_en) }}</p>
                 </div>
                 <div class="contact-actions">
-                    <a class="button button-dark wa-service" data-href-ar="https://wa.me/9647726443352?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%20%D8%AD%D8%A7%D8%B1%D8%AB%D8%8C%20%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%AA%D8%AE%D8%B7%D9%8A%D8%B7%20%D8%B1%D8%AD%D9%84%D8%A9.%0A%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A9%3A%20%0A%D8%A7%D9%84%D8%AA%D8%A7%D8%B1%D9%8A%D8%AE%3A%20%0A%D8%B9%D8%AF%D8%AF%20%D8%A7%D9%84%D8%B6%D9%8A%D9%88%D9%81%3A%20" data-href-en="https://wa.me/9647726443352?text=Hello%20Harith%2C%20I%20would%20like%20to%20plan%20a%20trip.%0AService%3A%20%0ADate%3A%20%0ANumber%20of%20guests%3A%20" href="https://wa.me/9647726443352" target="_blank" rel="noopener">
-                        {{ tr('افتح واتساب الآن', 'Open WhatsApp now') }} <span>↗</span>
+                    <a class="button button-dark wa-service" data-href-ar="{{ c.links.contact_ar }}" data-href-en="{{ c.links.contact_en }}" href="{{ c.links.contact_en }}" target="_blank" rel="noopener">
+                        {{ tr(s.contact_button_ar, s.contact_button_en) }} <span>↗</span>
                     </a>
-                    <p><bdi>+964 772 644 3352</bdi><br><a href="mailto:harithfiras222@gmail.com">harithfiras222@gmail.com</a></p>
+                    <p>{% if s.contact_phone %}<bdi>{{ s.contact_phone }}</bdi><br>{% endif %}{% if s.contact_email %}<a href="mailto:{{ s.contact_email }}">{{ s.contact_email }}</a>{% endif %}</p>
                 </div>
             </div>
         </section>
+
+        {% elif block.type == 'custom' %}
+        <section class="custom-section section{{ ' section-dark' if sec.style == 'dark' else (' section-gold' if sec.style == 'gold' else '') }}" id="{{ block.anchor }}">
+            <div class="section-shell">
+                <div class="custom-layout{{ ' has-image' if sec.image }}">
+                    <div class="custom-copy reveal">
+                        {{ index_label }}
+                        <h2>{{ tr(sec.title_ar, sec.title_en) }}</h2>
+                        {% if sec.body_ar or sec.body_en %}<p class="pre-line">{{ tr(sec.body_ar, sec.body_en) }}</p>{% endif %}
+                        {% if (sec.button_ar or sec.button_en) and sec.button_link %}
+                        <a class="button {{ 'button-dark' if sec.style == 'gold' else 'button-primary' }}" href="{{ sec.button_link }}"{% if sec.button_link.startswith('http') %} target="_blank" rel="noopener"{% endif %}>{{ tr(sec.button_ar, sec.button_en) }}</a>
+                        {% endif %}
+                    </div>
+                    {% if sec.image %}
+                    <figure class="custom-image reveal"><img src="{{ media(sec.image) }}" alt="{{ sec.title_ar }}" data-alt-ar="{{ sec.title_ar }}" data-alt-en="{{ sec.title_en }}" loading="lazy"></figure>
+                    {% endif %}
+                </div>
+                {% if sec.images %}
+                <div class="custom-grid">
+                    {% for image in sec.images %}
+                    <button class="lb-thumb custom-grid-item reveal" type="button" data-group="custom-{{ sec.id }}" data-alt-ar="{{ sec.title_ar }}" data-alt-en="{{ sec.title_en }}" aria-label="{{ sec.title_en }} {{ loop.index }}">
+                        <img src="{{ media(image) }}" alt="" loading="lazy">
+                    </button>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </section>
+        {% endif %}
+        {% endfor %}
     </main>
 
     <footer class="site-footer">
         <div class="section-shell footer-top">
             <a class="brand footer-brand" href="#main">
-                <img src="{{ url_for('static', filename='images/harith-profile.jpg') }}" alt="" width="52" height="52">
-                <span><strong>{{ tr('حارث فراس', 'Harith Firas') }}</strong><small>{{ tr('السياحة في الموصل', 'Mosul Tourism') }}</small></span>
+                <img src="{{ media(s.logo_image) }}" alt="" width="52" height="52">
+                <span><strong>{{ tr(s.brand_name_ar, s.brand_name_en) }}</strong><small>{{ tr(s.brand_tagline_ar, s.brand_tagline_en) }}</small></span>
             </a>
-            <p>{{ tr('الموصل · نينوى · العراق', 'Mosul · Nineveh · Iraq') }}</p>
+            <p>{{ tr(s.footer_location_ar, s.footer_location_en) }}</p>
             <a class="back-top" href="#main">{{ tr('إلى الأعلى', 'Back to top') }} ↑</a>
         </div>
         <div class="section-shell footer-bottom">
-            <p>© <span id="year"></span> Harith Firas. {{ tr('جميع الحقوق محفوظة.', 'All rights reserved.') }}</p>
+            <p>© <span id="year"></span> {{ s.footer_owner }}. {{ tr(s.footer_rights_ar, s.footer_rights_en) }}</p>
+            {% if s.show_credits and c.landmarks %}
             <details class="credits">
-                <summary>{{ tr('مصادر صور معالم الموصل', 'Mosul landmark image credits') }}</summary>
+                <summary>{{ tr(s.footer_credits_ar, s.footer_credits_en) }}</summary>
                 <ul>
-                    {% for landmark in landmarks %}
-                    <li><a href="{{ landmark.source }}" target="_blank" rel="noopener">{{ tr(landmark.title_ar, landmark.title_en) }}</a> — {{ landmark.credit }}</li>
+                    {% for landmark in c.landmarks if landmark.credit %}
+                    <li>{% if landmark.source %}<a href="{{ landmark.source }}" target="_blank" rel="noopener">{{ tr(landmark.title_ar, landmark.title_en) }}</a>{% else %}{{ tr(landmark.title_ar, landmark.title_en) }}{% endif %} — {{ landmark.credit }}</li>
                     {% endfor %}
                 </ul>
             </details>
+            {% endif %}
         </div>
     </footer>
 
-    <a class="floating-whatsapp wa-service" data-href-ar="https://wa.me/9647726443352?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%20%D8%AD%D8%A7%D8%B1%D8%AB%D8%8C%20%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1." data-href-en="https://wa.me/9647726443352?text=Hello%20Harith%2C%20I%20would%20like%20to%20make%20an%20enquiry." href="https://wa.me/9647726443352" target="_blank" rel="noopener" aria-label="WhatsApp">
+    {% if s.floating_whatsapp %}
+    <a class="floating-whatsapp wa-service" data-href-ar="{{ c.links.floating_ar }}" data-href-en="{{ c.links.floating_en }}" href="{{ c.links.floating_en }}" target="_blank" rel="noopener" aria-label="WhatsApp">
         <span></span>WA
     </a>
+    {% endif %}
 
     <div class="lightbox" role="dialog" aria-modal="true" aria-label="عارض الصور" hidden>
         <button class="lightbox-close" type="button" aria-label="إغلاق">×</button>
@@ -333,22 +385,15 @@
 
     <noscript><style>.reveal{opacity:1!important;transform:none!important}.menu-toggle{display:none!important}.main-nav{display:flex!important}</style></noscript>
     <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "TouristInformationCenter",
-      "name": "Harith Firas — Mosul Tourism",
-      "description": "Guided tours, Hajj and Umrah programs, and hotel booking in Mosul.",
-      "telephone": "+9647726443352",
-      "email": "harithfiras222@gmail.com",
-      "areaServed": "Mosul, Nineveh, Iraq",
-      "sameAs": [
-        "https://www.facebook.com/profile.php?id=100063651072840",
-        "https://www.instagram.com/harfir1/",
-        "https://youtube.com/channel/UC5_QzqI4Io-K4rwuiAQe_9w",
-        "https://x.com/harithfiras3"
-      ]
-    }
-    </script>
+    <script type="application/ld+json">{{ {
+        "@context": "https://schema.org",
+        "@type": "TouristInformationCenter",
+        "name": s.brand_name_en ~ " — " ~ s.brand_tagline_en,
+        "description": s.meta_description_en,
+        "telephone": s.contact_phone | replace(' ', ''),
+        "email": s.contact_email,
+        "areaServed": "Mosul, Nineveh, Iraq",
+        "sameAs": c.social_links | map(attribute='url') | list
+    } | tojson }}</script>
 </body>
 </html>

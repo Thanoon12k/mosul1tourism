@@ -1,0 +1,37 @@
+{% extends "admin/base.html" %}
+{% block title %}Media library{% endblock %}
+{% block crumbs %}Media library <span class="muted">({{ files | length }})</span>{% endblock %}
+{% block content %}
+<form class="panel bulk" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+    <h2>Upload images</h2>
+    <p class="muted">Upload many images at once. They can then be picked with “Choose from library” in any image field.</p>
+    <label class="dropzone">
+        <input type="file" name="files" accept="image/*" multiple required data-preview-multi>
+        <span>⬆ Drop images here or click to choose</span>
+    </label>
+    <div class="pending-previews" data-pending></div>
+    <button class="btn btn-primary" name="action" value="upload" type="submit">Upload</button>
+</form>
+<div class="media-grid">
+    {% for file in files %}
+    <figure class="media-card">
+        <a href="{{ media(file.path) }}" target="_blank" rel="noopener"><img src="{{ media(file.path) }}" alt="" loading="lazy"></a>
+        <figcaption>
+            <input type="text" readonly value="{{ file.path }}" aria-label="Image path" onclick="this.select()">
+            <span class="muted small">{{ (file.size / 1024) | round | int }} KB
+                {% if file.used %}<span class="badge">in use</span>{% endif %}
+                {% if not file.deletable %}<span class="badge badge-off">original</span>{% endif %}
+            </span>
+            {% if file.deletable and not file.used %}
+            <form method="post">
+                <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+                <input type="hidden" name="path" value="{{ file.path }}">
+                <button class="btn btn-danger small" name="action" value="delete" data-confirm="Delete this image permanently?">Delete</button>
+            </form>
+            {% endif %}
+        </figcaption>
+    </figure>
+    {% endfor %}
+</div>
+{% endblock %}
