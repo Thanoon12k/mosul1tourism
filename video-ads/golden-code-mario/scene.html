@@ -4,6 +4,24 @@ html,body{margin:0;background:#000}canvas{display:block}</style></head><body>
 <canvas id="c" width="1080" height="1920"></canvas>
 <script>
 // Golden Code ad, pixel-platformer world. draw(t) renders the frame at time t (seconds). 30s total.
+// Per-ad texts; pick with ?v=<key>.
+const ADS={
+ services:{world:'متجرك 🛍️',c1:['عندك منتج؟','خلّي الكل يشوفه'],c2:['نسوي فيديو إعلاني','لكل واحد 👇'],
+   hits:[['🏢','الشركات'],['🛍️','المتاجر'],['📱','الپيجات'],['🙋','الأفراد']],c3:['بنفس منتجك','وبنفس تفاصيله ✨'],
+   from:'📦',to:'phone',toLbl:'إعلانك',frames:['📦','🛍️','⭐'],c4:['🎬 فيديو يوقّف السكرول'],
+   p1:['30 ثانية','2000 د.ع'],p2:['دقيقة كاملة','3000 د.ع'],pline:'أرخص من كارت شحن 😉',
+   endTitle:'الكود الذهبي',endSub:'اطلب فيديو إعلاني لمنتجك'},
+ mobile:{world:'📱 كورس التطبيقات',c1:['تحلم تسوي تطبيقك؟','بالذكاء الاصطناعي 🤖'],c2:['8 جلسات تاخذك','من الصفر للنشر 👇'],
+   hits:[['🧠','تحچي ويا AI'],['📲','تبني الشاشات'],['🔐','حسابات وبيانات'],['🏪','تنشر بالمتاجر']],c3:['Flutter + Claude Code','خطوة بخطوة ✨'],
+   from:'💡',to:'phone',toLbl:'تطبيقك',frames:['📲','🔔','⭐'],c4:['💡 من فكرة ← تطبيق حقيقي'],
+   p1:['سعر الجلسة','15,000 د.ع'],p2:['8 جلسات','120,000 د.ع'],pline:'🎁 هدية: موقع باسمك',
+   endTitle:'مركز الكود الذهبي',endSub:'سجّل بكورس تطبيقات الموبايل'},
+ web:{world:'🌐 كورس المواقع',c1:['تريد موقع احترافي؟','تبنيه بالذكاء الاصطناعي 🤖'],c2:['8 جلسات تاخذك','من الصفر للنشر 👇'],
+   hits:[['🎨','تصميم احترافي'],['🧩','صفحات ولوحة تحكم'],['🔐','حسابات وبيانات'],['🚀','نشر ودومين']],c3:['Claude Code','خطوة بخطوة ✨'],
+   from:'💡',to:'browser',toLbl:'موقعك',frames:['🌐','🛒','⭐'],c4:['💡 من فكرة ← موقع حقيقي'],
+   p1:['سعر الجلسة','15,000 د.ع'],p2:['8 جلسات','120,000 د.ع'],pline:'🎁 هدية: موقع باسمك',
+   endTitle:'مركز الكود الذهبي',endSub:'سجّل بكورس تطوير المواقع'}};
+const AD=ADS[new URLSearchParams(location.search).get('v')||'services'];
 const W=1080,H=1920,GROUND=1500,PX=8,SPEED=260,HX=330;
 const cv=document.getElementById('c'),x=cv.getContext('2d');
 const PAL={Y:'#ffc21a',O:'#d98a00',S:'#ffcf9e',K:'#1b1b2f',W:'#fff',T:'#19b3a6',B:'#2b4acb',N:'#6b3a1e'};
@@ -32,13 +50,13 @@ let coins=0;
 function hud(t){x.fillStyle='rgba(27,27,47,.55)';x.fillRect(0,0,W,150);text('الكود الذهبي',W-230,80,58,'#ffc21a');coin(420,78,t);text('× '+String(coins).padStart(2,'0'),520,80,58);text('⏱ '+Math.max(0,Math.ceil(30-t)),130,80,58)}
 
 // ---------- scenes ----------
-const HITS=[[5.0,'🏢','الشركات'],[6.6,'🛍️','المتاجر'],[8.2,'📱','الپيجات'],[9.8,'🙋','الأفراد']];
+const HITS=[5.0,6.6,8.2,9.8].map((h,i)=>[h,AD.hits[i][0],AD.hits[i][1]]);
 function run(t){ // 2.2..12 overworld run with ? blocks
   const cam=(t-2.2)*SPEED;sky('#6ec6ff','#d6f1ff');[[120,300],[700,520],[1500,260],[2300,480],[3000,330]].forEach(([cx,cy])=>cloud(((cx-cam*0.5)%2600+2600)%2600-300,cy,10));hills(cam);ground(cam);
   coins=0;for(const [th,emo,lbl] of HITS){const bx=HX+(th-t)*SPEED+24,by=GROUND-128-JH-80+30,used=t>=th,bump=used&&t<th+0.15?30*Math.sin((t-th)/0.15*Math.PI):0;block(bx,by,used,bump);
     if(used){coins++;const k=t-th;if(k<3){const iy=by-30-ease(k/0.6)*200;x.save();x.globalAlpha=cl((3-k)/0.4,0,1);x.font='150px "Noto Color Emoji"';x.textAlign='center';x.textBaseline='middle';x.fillText(emo,bx+40,iy);text(lbl,bx+40,iy+120,80,'#ffc21a');x.restore()}}}
   hero(HX,GROUND+jumpY(t),t,true);
-  caption(['عندك منتج؟','خلّي الكل يشوفه'],2.4,4.6,t);caption(['نسوي فيديو إعلاني','لكل واحد 👇'],4.8,11.8,t,330);
+  caption(AD.c1,2.4,4.6,t);caption(AD.c2,4.8,11.8,t,330);
 }
 function pipeScene(t){ // 12..15 run to pipe, jump on, go down
   const cam=9.8*SPEED+(Math.min(t,13.3)-12)*SPEED;sky('#6ec6ff','#d6f1ff');cloud(600-cam*0.05%600,400,10);hills(cam);ground(cam);
@@ -46,7 +64,7 @@ function pipeScene(t){ // 12..15 run to pipe, jump on, go down
   let hy=GROUND+jumpY(t),hx=HX;if(t>=13.3){hx=HX+ease((t-13.3)/JD)*(px+10-HX);if(t>=13.3+JD*0.5)hy=Math.min(hy,top)}
   if(t>=14.0){hy=top+ease((t-14)/0.8)*260;hx=px+16}
   x.save();x.beginPath();x.rect(0,0,W,top+(t>=14?0:H));if(t<14)x.rect(0,0,W,H);x.clip();hero(hx,hy,t,t<13.3);x.restore();pipe(px,top);
-  caption(['بنفس منتجك','وبنفس تفاصيله ✨'],12.2,14.9,t);
+  caption(AD.c3,12.2,14.9,t);
   if(t>14.6){const r=(1-ease((t-14.6)/0.4))*1400;x.save();x.fillStyle='#000';x.beginPath();x.rect(0,0,W,H);x.arc(hx+64,hy-64,Math.max(r,0),0,7,true);x.fill('evenodd');x.restore()}
 }
 function under(t){ // 15..18 underground: product becomes an ad video
@@ -55,11 +73,11 @@ function under(t){ // 15..18 underground: product becomes an ad video
   const k=t-15,cx=W/2,cy=1000,morph=ease((k-1.2)/0.6);
   hero(140+ease(k/1.0)*200,GROUND+(k<0.5?-(1-k/0.5)*500:0),t,k<1);
   x.fillStyle='#ffc21a';x.fillRect(cx-150,1300,300,200);x.fillStyle='#b36b00';x.fillRect(cx-150,1300,300,20);
-  if(morph<1){x.save();x.globalAlpha=1-morph;x.font='280px "Noto Color Emoji"';x.textAlign='center';x.textBaseline='middle';x.fillText('📦',cx,1140+Math.sin(t*4)*10);x.restore()}
-  if(morph>0){x.save();x.translate(cx,cy);x.scale(morph,morph);x.fillStyle='#1b1b2f';x.fillRect(-190,-340,380,680);x.fillStyle='#ffc21a';x.fillRect(-170,-300,340,580);x.fillStyle='#1b1b2f';x.beginPath();x.moveTo(-50,-80);x.lineTo(80,0);x.lineTo(-50,80);x.fill();
-    const f=Math.floor(t*6)%3;x.font='90px "Noto Color Emoji"';x.textAlign='center';x.fillText(['📦','🛍️','⭐'][f],0,-180);text('إعلانك',0,200,72,'#fff');x.restore()}
+  if(morph<1){x.save();x.globalAlpha=1-morph;x.font='280px "Noto Color Emoji"';x.textAlign='center';x.textBaseline='middle';x.fillText(AD.from,cx,1140+Math.sin(t*4)*10);x.restore()}
+  if(morph>0){x.save();x.translate(cx,cy);x.scale(morph,morph);if(AD.to==='browser'){x.fillStyle='#1b1b2f';x.fillRect(-400,-300,800,600);x.fillStyle='#ffc21a';x.fillRect(-380,-230,760,510);['#ff5c7a','#ffd23f','#3ddc97'].forEach((c,i)=>{x.fillStyle=c;x.fillRect(-370+i*40,-275,24,24)});x.fillStyle='#fff8e1';x.fillRect(-240,-280,560,34)}else{x.fillStyle='#1b1b2f';x.fillRect(-190,-340,380,680);x.fillStyle='#ffc21a';x.fillRect(-170,-300,340,580);}x.fillStyle='#1b1b2f';x.beginPath();x.moveTo(-50,-80);x.lineTo(80,0);x.lineTo(-50,80);x.fill();
+    const f=Math.floor(t*6)%3;x.font='90px "Noto Color Emoji"';x.textAlign='center';x.fillText(AD.frames[f],0,-180);text(AD.toLbl,0,200,72,'#fff');x.restore()}
   for(let i=0;i<14;i++){const a=i/14*6.28+t*2,rr=260+60*Math.sin(t*5+i);if(morph>0&&morph<1||(k>1&&k<2.2)){x.fillStyle=i%2?'#fff':'#ffc21a';x.fillRect(cx+Math.cos(a)*rr-8,cy+Math.sin(a)*rr-8,16,16)}}
-  caption(['🎬 فيديو يوقّف السكرول'],16.6,17.9,t,360);
+  caption(AD.c4,16.6,17.9,t,360);
   if(k<0.35){x.fillStyle='rgba(0,0,0,'+(1-k/0.35)+')';x.fillRect(0,0,W,H)}
 }
 function prices(t){ // 18..24 two big price blocks
@@ -67,12 +85,12 @@ function prices(t){ // 18..24 two big price blocks
   const b1=HX+24,b2=HX+24+440,by=GROUND-128-JH-80+30;
   let hx=HX;if(t<18.6)hx=HX-300+ease((t-18)/0.6)*300;if(t>20.2)hx=HX+ease((t-20.2)/0.9)*440;
   const moving=(t<18.6)||(t>20.2&&t<21.1);
-  [[19.5,b1,'30 ثانية','2000 د.ع'],[21.5,b2,'دقيقة كاملة','3000 د.ع']].forEach(([th,bx,a,b])=>{const used=t>=th,bump=used&&t<th+0.15?30*Math.sin((t-th)/0.15*Math.PI):0;x.save();x.translate(bx+40,by+40);x.scale(2,2);block(-40,-40,used,bump/2);x.restore();
+  [[19.5,b1,...AD.p1],[21.5,b2,...AD.p2]].forEach(([th,bx,a,b])=>{const used=t>=th,bump=used&&t<th+0.15?30*Math.sin((t-th)/0.15*Math.PI):0;x.save();x.translate(bx+40,by+40);x.scale(2,2);block(-40,-40,used,bump/2);x.restore();
     if(used){const k=t-th;for(let i=0;i<6;i++){const cy=by-60-ease(k/0.8)*(160+i*40);if(k<1.2)coin(bx+40+(i-2.5)*50,cy,t+i)}
-      const s=panel(bx+40,by-470,400,300,(k)/0.4,'#1b1b2f','#fff8e1');if(k>0.15){text(a,bx+40,by-540,70,'#1b1b2f','#fff8e1');text(b,bx+40,by-420,96,'#d98a00','#fff8e1')}}});
+      const s=panel(bx+40,by-470,400,300,(k)/0.4,'#1b1b2f','#fff8e1');if(k>0.15){text(a,bx+40,by-540,70,'#1b1b2f','#fff8e1');text(b,bx+40,by-420,b.length>9?72:96,'#d98a00','#fff8e1')}}});
   coins=4+(t>=19.5?6:0)+(t>=21.5?6:0);
   hero(hx,GROUND+jumpY(t),t,moving);
-  caption(['بس بـ 👇'],18.1,19.4,t,300);if(t>22.2)text('أرخص من كارت شحن 😉',W/2,300,84,'#fff');
+  caption(['بس بـ 👇'],18.1,19.4,t,300);if(t>22.2)text(AD.pline,W/2,300,84,'#fff');
 }
 function finale(t){ // 24..30 flagpole, castle, CTA
   sky('#2b1d5c','#ff7b54');const k=t-24;for(let i=0;i<40;i++){x.fillStyle='rgba(255,255,255,.7)';x.fillRect((i*197)%W,(i*113)%800,5,5)}
@@ -83,11 +101,11 @@ function finale(t){ // 24..30 flagpole, castle, CTA
   if(t<27.6)hero(hx,hy,t,t<25.2||t>26.6);
   for(const [ft,fx,fy2,c] of [[27.0,250,600,'#ffc21a'],[27.6,800,450,'#19b3a6'],[28.2,500,300,'#ff5c7a'],[28.8,850,700,'#ffc21a']]){const kk=t-ft;if(kk>0&&kk<1.4){for(let i=0;i<16;i++){const a=i/16*6.28,r=ease(kk/0.8)*220;x.globalAlpha=cl(1.4-kk,0,1);x.fillStyle=c;x.fillRect(fx+Math.cos(a)*r-10,fy2+Math.sin(a)*r-10,20,20)}x.globalAlpha=1}}
   if(t>26.8){const kk=(t-26.8)/0.4;x.save();x.globalAlpha=cl(kk,0,1)*0.55;x.fillStyle='#000';x.fillRect(0,0,W,H);x.restore();
-    panel(W/2,820,960,1000,kk,'#1b1b2f','#fff8e1');if(kk>0.4){text('🏆 كورس كلير!',W/2,440,80,'#d98a00','#fff8e1');text('الكود الذهبي',W/2,590,150,'#ffc21a','#1b1b2f');text('اطلب فيديو إعلاني لمنتجك',W/2,760,78,'#1b1b2f','#fff8e1');
+    panel(W/2,820,960,1000,kk,'#1b1b2f','#fff8e1');if(kk>0.4){text('🏆 كورس كلير!',W/2,440,80,'#d98a00','#fff8e1');text(AD.endTitle,W/2,590,AD.endTitle.length>12?120:150,'#ffc21a','#1b1b2f');text(AD.endSub,W/2,760,74,'#1b1b2f','#fff8e1');
       const pulse=1+0.05*Math.sin(t*9);x.save();x.translate(W/2,960);x.scale(pulse,pulse);x.fillStyle='#0a3a1c';x.fillRect(-380,-80,770,170);x.fillStyle='#25d366';x.fillRect(-390,-90,770,170);text('واتساب 07847569167',0,0,80,'#fff','#0a3a1c');x.restore();
       text('fb.com/goldencode114',W/2,1170,60,'#1b1b2f','#fff8e1','Tajawal')}}
 }
-function intro(t){x.fillStyle='#000';x.fillRect(0,0,W,H);const k=ease(t/0.5);x.globalAlpha=k;text('العالم 1-1',W/2,760,130,'#fff','#000');hero(W/2-150,1080,t,false,10);text('× 3',W/2+120,1000,100,'#fff','#000');text('متجرك 🛍️',W/2,1250,100,'#ffc21a','#000');x.globalAlpha=1}
+function intro(t){x.fillStyle='#000';x.fillRect(0,0,W,H);const k=ease(t/0.5);x.globalAlpha=k;text('العالم 1-1',W/2,760,130,'#fff','#000');hero(W/2-150,1080,t,false,10);text('× 3',W/2+120,1000,100,'#fff','#000');text(AD.world,W/2,1250,100,'#ffc21a','#000');x.globalAlpha=1}
 function draw(t){x.setTransform(1,0,0,1,0,0);x.clearRect(0,0,W,H);coins=0;
   if(t<2.2)intro(t);else if(t<12)run(t);else if(t<15)pipeScene(t);else if(t<18)under(t);else if(t<24)prices(t);else finale(t);
   if(t>=2.2&&t<26.8){if(t>=12&&t<18)coins=4;hud(t)}

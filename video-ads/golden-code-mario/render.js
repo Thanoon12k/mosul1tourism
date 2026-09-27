@@ -6,7 +6,7 @@ const FF = process.env.FFMPEG || 'ffmpeg', FPS = 30, DUR = 30;
 (async () => {
   const b = await chromium.launch();
   const p = await b.newPage({ viewport: { width: 1080, height: 1920 } });
-  await p.goto('file://' + path.resolve(__dirname, 'scene.html'));
+  await p.goto('file://' + path.resolve(__dirname, 'scene.html') + '?v=' + (process.argv[4] || 'services'));
   await p.evaluate(async () => { await document.fonts.load('96px Lalezar'); await document.fonts.load('60px Tajawal'); await document.fonts.load('90px "Noto Color Emoji"', '📦'); });
   const ff = spawn(FF, ['-y', '-f', 'image2pipe', '-framerate', FPS, '-c:v', 'mjpeg', '-i', '-', '-i', process.argv[3],
     '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-preset', 'medium', '-crf', '20', '-c:a', 'aac', '-b:a', '160k', '-shortest', '-movflags', '+faststart', process.argv[2]], { stdio: ['pipe', 'inherit', 'inherit'] });
