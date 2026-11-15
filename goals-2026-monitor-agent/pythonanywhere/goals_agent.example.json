@@ -1,0 +1,10 @@
+{
+  "bot_token": "8905888429:your-goals11_2026_bot-token",
+  "groq_api_key": "gsk_your_new_groq_key",
+  "groq_model": "openai/gpt-oss-120b",
+  "allowed_chat_ids": [123456789],
+  "webhook_secret": "any-long-random-string",
+  "tz_offset_hours": 3,
+  "digest_hour": 9,
+  "deadline_alert_days": 3
+}
