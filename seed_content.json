@@ -1,0 +1,783 @@
+{
+  "settings": {
+    "brand_name_ar": "حارث فراس",
+    "brand_name_en": "Harith Firas",
+    "brand_tagline_ar": "السياحة في الموصل",
+    "brand_tagline_en": "Mosul Tourism",
+    "logo_image": "images/harith-profile.jpg",
+    "site_title_ar": "الموصل مدينة سياحية | حارث فراس",
+    "site_title_en": "Mosul, a City of Tourism | Harith Firas",
+    "meta_description_ar": "حارث فراس السياحة في الموصل — جولات سياحية، حج وعمرة، وحجز فنادق مختارة في الموصل.",
+    "meta_description_en": "Harith Firas Mosul Tourism — guided tours, Hajj and Umrah journeys, and selected hotel booking in Mosul.",
+    "share_image": "images/brand-cover.jpg",
+    "default_language": "en",
+    "header_button_ar": "تواصل الآن",
+    "header_button_en": "Contact now",
+    "header_whatsapp": "9647726443352",
+    "header_wa_message_ar": "السلام عليكم حارث، أريد الاستفسار عن خدماتك.",
+    "header_wa_message_en": "Hello Harith, I would like to ask about your services.",
+    "floating_whatsapp": true,
+    "floating_wa_message_ar": "السلام عليكم حارث، أريد الاستفسار.",
+    "floating_wa_message_en": "Hello Harith, I would like to make an enquiry.",
+    "hero_image": "images/mosul/al-nuri-2025.jpg",
+    "hero_eyebrow_ar": "حارث فراس · مرشد سياحي من الموصل",
+    "hero_eyebrow_en": "Harith Firas · Local tour guide from Mosul",
+    "hero_title1_ar": "الموصل",
+    "hero_title1_en": "Mosul,",
+    "hero_title2_ar": "مدينة سياحية",
+    "hero_title2_en": "a City of Tourism",
+    "hero_lead_ar": "مدينةٌ من حجرٍ وذاكرة، يمرّ دجلة في قلبها وتلتقي في أزقتها حضارات نينوى. تعرّف إليها مع شخص يعرف حكاياتها.",
+    "hero_lead_en": "A city of stone and memory, with the Tigris at its heart and the civilizations of Nineveh in its streets. Explore it with someone who knows its stories.",
+    "hero_button1_ar": "اكتشف معالم الموصل",
+    "hero_button1_en": "Explore Mosul landmarks",
+    "hero_button1_link": "#landmarks",
+    "hero_button2_ar": "اختر خدمتك",
+    "hero_button2_en": "Choose a service",
+    "hero_button2_link": "#services",
+    "hero_scroll_ar": "اكتشف",
+    "hero_scroll_en": "Explore",
+    "contact_phone": "+964 772 644 3352",
+    "contact_email": "harithfiras222@gmail.com",
+    "contact_whatsapp": "9647726443352",
+    "contact_wa_message_ar": "السلام عليكم حارث، أريد تخطيط رحلة.\nالخدمة: \nالتاريخ: \nعدد الضيوف: ",
+    "contact_wa_message_en": "Hello Harith, I would like to plan a trip.\nService: \nDate: \nNumber of guests: ",
+    "contact_button_ar": "افتح واتساب الآن",
+    "contact_button_en": "Open WhatsApp now",
+    "about_cover": "images/brand-cover.jpg",
+    "about_portrait": "images/harith-profile.jpg",
+    "about_signature": "HARITH FIRAS",
+    "about_role_ar": "مرشد سياحي · يوتيوبر",
+    "about_role_en": "Tour guide · YouTuber",
+    "footer_location_ar": "الموصل · نينوى · العراق",
+    "footer_location_en": "Mosul · Nineveh · Iraq",
+    "footer_rights_ar": "جميع الحقوق محفوظة.",
+    "footer_rights_en": "All rights reserved.",
+    "footer_owner": "Harith Firas",
+    "footer_credits_ar": "مصادر صور معالم الموصل",
+    "footer_credits_en": "Mosul landmark image credits",
+    "show_credits": true
+  },
+  "sections": {
+    "trip": {
+      "visible": true,
+      "in_nav": false,
+      "nav_ar": "الرحلة",
+      "nav_en": "Trip",
+      "label_ar": "الرحلة الأحدث",
+      "label_en": "Latest journey",
+      "title_ar": "عمرة من الموصل + كأس الخليج في جدة",
+      "title_en": "Umrah from Mosul + Gulf Cup in Jeddah",
+      "intro_ar": "",
+      "intro_en": ""
+    },
+    "services": {
+      "visible": true,
+      "in_nav": true,
+      "nav_ar": "الخدمات",
+      "nav_en": "Services",
+      "label_ar": "الخدمات",
+      "label_en": "Services",
+      "title_ar": "ثلاث طرق لتبدأ رحلتك",
+      "title_en": "Three ways to begin your journey",
+      "intro_ar": "اختر الخدمة، وستفتح رسالة واتساب جاهزة بالتفاصيل الأساسية لتكمل طلبك مباشرة.",
+      "intro_en": "Choose a service and a ready-to-complete WhatsApp message will open with the essential details."
+    },
+    "landmarks": {
+      "visible": true,
+      "in_nav": true,
+      "nav_ar": "معالم الموصل",
+      "nav_en": "Landmarks",
+      "label_ar": "معالم الموصل",
+      "label_en": "Mosul landmarks",
+      "title_ar": "كل زاوية تحمل حكاية",
+      "title_en": "Every corner holds a story",
+      "intro_ar": "صور حقيقية من المدينة ومواقعها التاريخية؛ يستطيع حارث ترتيب مسار يضم المعالم التي تختارها.",
+      "intro_en": "Real photographs from the city and its historic sites. Harith can arrange a route around the landmarks you choose."
+    },
+    "hotels": {
+      "visible": true,
+      "in_nav": true,
+      "nav_ar": "الفنادق",
+      "nav_en": "Hotels",
+      "label_ar": "فنادق الموصل",
+      "label_en": "Mosul hotels",
+      "title_ar": "اختر إقامتك في المدينة",
+      "title_en": "Choose your stay in the city",
+      "intro_ar": "خيارات بصورها وتصنيفاتها ومواقعها. اختر الفندق المناسب، وسيفتح واتساب برسالة حجز جاهزة.",
+      "intro_en": "Options with photos, categories and locations. Choose a hotel to open a ready-to-complete WhatsApp booking message.",
+      "note_ar": "الأسعار المذكورة تقديرية وقد تتغير حسب التاريخ ونوع الغرفة؛ يؤكَّد السعر والتوفر عبر واتساب قبل الحجز.",
+      "note_en": "Rates are indicative and may vary by date and room type; price and availability are confirmed on WhatsApp before booking."
+    },
+    "gallery": {
+      "visible": true,
+      "in_nav": true,
+      "nav_ar": "الصور",
+      "nav_en": "Gallery",
+      "label_ar": "من رحلات حارث",
+      "label_en": "From Harith’s journeys",
+      "title_ar": "وجوه، مدن، وذكريات",
+      "title_en": "People, cities & memories",
+      "intro_ar": "صور وبوسترات من صفحة حارث على فيسبوك، من جولات العراق إلى إسطنبول ورحلات الملاعب.",
+      "intro_en": "Photos and posters from Harith’s Facebook page—from tours across Iraq to Istanbul and football journeys."
+    },
+    "about": {
+      "visible": true,
+      "in_nav": true,
+      "nav_ar": "عن حارث",
+      "nav_en": "About",
+      "label_ar": "عن حارث",
+      "label_en": "About Harith",
+      "title_ar": "موصليّ يعرّف العالم بمدينته",
+      "title_en": "A Moslawi sharing his city with the world",
+      "intro_ar": "حارث فراس مرشد سياحي وصانع محتوى من الموصل. ترافقه خبرة ميدانية مع الضيوف العرب والأجانب وشغف بتقديم العراق كما يراه أهله: كريماً، متنوعاً، ومليئاً بالحكايات.",
+      "intro_en": "Harith Firas is a tour guide and content creator from Mosul. His on-the-ground experience with Arab and international guests is driven by a wish to present Iraq as locals know it: generous, diverse and full of stories."
+    },
+    "contact": {
+      "visible": true,
+      "in_nav": false,
+      "nav_ar": "تواصل",
+      "nav_en": "Contact",
+      "label_ar": "لنخطط الرحلة",
+      "label_en": "Let’s plan the journey",
+      "title_ar": "من أين تريد أن تبدأ؟",
+      "title_en": "Where would you like to begin?",
+      "intro_ar": "التواصل والحجز حالياً عبر واتساب فقط. اضغط الزر واكتب تاريخك وعدد الضيوف والخدمة المطلوبة.",
+      "intro_en": "Enquiries and booking are currently handled on WhatsApp. Share your date, group size and requested service."
+    }
+  },
+  "trip": {
+    "image": "images/poster-jeddah-gulf-cup.jpg",
+    "images": [],
+    "caption_ar": "أحدث برنامج منشور على صفحة حارث",
+    "caption_en": "Latest program published on Harith’s page",
+    "status_ar": "الحجز والاستفسار متاحان عبر واتساب",
+    "status_en": "Booking and enquiries available on WhatsApp",
+    "date_ar": "الانطلاق 19 / 09 / 2026",
+    "date_en": "Departure · 19 September 2026",
+    "detail1_value": "10",
+    "detail1_ar": "ليالٍ: 8 مكة + 2 المدينة",
+    "detail1_en": "nights: 8 Makkah + 2 Madinah",
+    "detail2_value": "650,000",
+    "detail2_ar": "دينار عراقي قبل فئة تذكرة المباراة",
+    "detail2_en": "IQD before match-ticket category",
+    "bullets_ar": [
+      "التأشيرة والنقل البري من الموصل والفنادق",
+      "تنقلات مكة والمدينة والملعب والزيارات الدينية",
+      "فئات تذاكر المباراة تبدأ من 20,000 إلى 55,000 دينار"
+    ],
+    "bullets_en": [
+      "Visa, overland transport from Mosul and hotels",
+      "Makkah, Madinah, stadium transfers and religious visits",
+      "Match-ticket categories range from 20,000 to 55,000 IQD"
+    ],
+    "whatsapp": "9647878205040",
+    "wa_message_ar": "السلام عليكم حارث، أريد حجز رحلة العمرة وكأس الخليج في جدة بتاريخ 19/9/2026.\nعدد المسافرين: \nفئة تذكرة المباراة: \nالمدينة: \nملاحظات: ",
+    "wa_message_en": "Hello Harith, I would like to book the Umrah and Gulf Cup trip to Jeddah departing 19 September 2026.\nNumber of travelers: \nMatch ticket category: \nCity: \nNotes: ",
+    "button_ar": "احجز هذه الرحلة عبر واتساب",
+    "button_en": "Book this journey on WhatsApp",
+    "note_ar": "مكتب نسك للحج والعمرة · الموصل · تقاطع الأسدي قرب مركز ابن الهيثم للعيون",
+    "note_en": "Nusk Hajj & Umrah Office · Mosul · Al-Asadi intersection near Ibn Al-Haytham Eye Center"
+  },
+  "layout": [
+    "trip",
+    "services",
+    "landmarks",
+    "hotels",
+    "gallery",
+    "about",
+    "contact"
+  ],
+  "hero_facts": [
+    {
+      "id": "f1",
+      "value": "77K+",
+      "label_ar": "متابع على فيسبوك",
+      "label_en": "Facebook followers"
+    },
+    {
+      "id": "f2",
+      "value": "03",
+      "label_ar": "مجموعات خدمات واضحة",
+      "label_en": "Clear service groups"
+    },
+    {
+      "id": "f3",
+      "value": "AR / EN",
+      "label_ar": "خدمة بالعربية والإنكليزية",
+      "label_en": "Arabic & English service"
+    }
+  ],
+  "services": [
+    {
+      "id": "tours",
+      "image": "images/gallery/gallery-05.jpg",
+      "images": [],
+      "title_ar": "جولات سياحية مع مرشد محلي",
+      "title_en": "Guided tours with a local expert",
+      "summary_ar": "اكتشف الموصل القديمة ونينوى وباقي مواقع العراق مع حارث؛ جولات خاصة ومجموعات وبالعربية أو الإنكليزية.",
+      "summary_en": "Discover old Mosul, Nineveh and destinations across Iraq with Harith—private or group tours in Arabic or English.",
+      "features_ar": [
+        "برامج خاصة حسب الوقت والاهتمامات",
+        "استقبال ومرافقة الضيوف الأجانب",
+        "تنسيق النقل والتذاكر داخل الرحلة"
+      ],
+      "features_en": [
+        "Itineraries tailored to your time and interests",
+        "Hosting and guiding international visitors",
+        "Trip transport and ticket coordination"
+      ],
+      "phone": "+964 772 644 3352",
+      "secondary_phone": "",
+      "whatsapp": "9647726443352",
+      "wa_message_ar": "السلام عليكم حارث، أريد الاستفسار عن جولة سياحية في الموصل.\nالخدمة: جولة خاصة مع مرشد سياحي\nعدد الأشخاص: \nالتاريخ المطلوب: \nاللغة: \nالمواقع التي أرغب بزيارتها: ",
+      "wa_message_en": "Hello Harith, I would like to ask about a guided tour in Mosul.\nService: Private guided tour\nNumber of guests: \nPreferred date: \nLanguage: \nPlaces I would like to visit: ",
+      "button_ar": "اكتب تفاصيل طلبك",
+      "button_en": "Send your request",
+      "link_url": ""
+    },
+    {
+      "id": "umrah",
+      "image": "images/poster-jeddah-gulf-cup.jpg",
+      "images": [],
+      "title_ar": "الحج والعمرة والرحلات الدينية",
+      "title_en": "Hajj, Umrah & religious journeys",
+      "summary_ar": "برامج عمرة برية منظمة من الموصل تشمل التأشيرة والنقل والسكن والزيارات الدينية وفق تفاصيل كل رحلة.",
+      "summary_en": "Organized overland Umrah programs from Mosul, including visa, transport, accommodation and religious visits as listed per trip.",
+      "features_ar": [
+        "الانطلاق من الموصل",
+        "فنادق في مكة والمدينة",
+        "متابعة وتنقلات ضمن البرنامج"
+      ],
+      "features_en": [
+        "Departure from Mosul",
+        "Hotels in Makkah and Madinah",
+        "Program support and local transfers"
+      ],
+      "phone": "+964 787 820 5040",
+      "secondary_phone": "",
+      "whatsapp": "9647878205040",
+      "wa_message_ar": "السلام عليكم حارث، أريد الاستفسار عن برنامج الحج أو العمرة.\nنوع الرحلة: \nعدد المسافرين: \nتاريخ السفر: \nملاحظات: ",
+      "wa_message_en": "Hello Harith, I would like to ask about a Hajj or Umrah program.\nTrip type: \nNumber of travelers: \nPreferred date: \nNotes: ",
+      "button_ar": "اكتب تفاصيل طلبك",
+      "button_en": "Send your request",
+      "link_url": ""
+    },
+    {
+      "id": "hotels",
+      "image": "images/hotels/ramada-mosul.avif",
+      "images": [],
+      "title_ar": "حجز وتأجير الفنادق",
+      "title_en": "Hotel booking & accommodation",
+      "summary_ar": "مساعدة مباشرة لاختيار وحجز السكن المناسب في الموصل حسب عدد الضيوف والميزانية ومدة الإقامة.",
+      "summary_en": "Direct help choosing and booking suitable accommodation in Mosul based on group size, budget and length of stay.",
+      "features_ar": [
+        "خيارات للأفراد والعوائل والمجموعات",
+        "مقارنة حسب الموقع والميزانية",
+        "تأكيد التفاصيل عبر واتساب"
+      ],
+      "features_en": [
+        "Options for solo guests, families and groups",
+        "Choice by location and budget",
+        "Details confirmed directly on WhatsApp"
+      ],
+      "phone": "+964 771 061 3674",
+      "secondary_phone": "+964 751 713 4731",
+      "whatsapp": "9647710613674",
+      "wa_message_ar": "السلام عليكم، أريد حجز فندق في الموصل.\nعدد الضيوف: \nتاريخ الوصول: \nتاريخ المغادرة: \nالميزانية التقريبية: \nملاحظات: ",
+      "wa_message_en": "Hello, I would like to book a hotel in Mosul.\nNumber of guests: \nCheck-in date: \nCheck-out date: \nApproximate budget: \nNotes: ",
+      "button_ar": "اعرض الفنادق المتاحة",
+      "button_en": "View available hotels",
+      "link_url": "#hotels"
+    }
+  ],
+  "landmarks": [
+    {
+      "image": "images/mosul/al-nuri-2025.jpg",
+      "title_ar": "جامع النوري ومنارة الحدباء",
+      "title_en": "Al-Nuri Mosque & Al-Hadba Minaret",
+      "kicker_ar": "قلب المدينة القديمة",
+      "kicker_en": "Heart of the old city",
+      "description_ar": "أحد أشهر رموز الهوية الموصلية، يروي تاريخ العمارة والحياة في أزقة المدينة القديمة.",
+      "description_en": "One of Mosul’s defining symbols, telling the story of its architecture and old-city life.",
+      "credit": "الدبوني · CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Great_Mosque_of_al-Nuri_Feb_2025_3.jpg",
+      "id": "al-nuri",
+      "images": []
+    },
+    {
+      "image": "images/mosul/clock-church-2024.jpg",
+      "title_ar": "كنيسة الساعة",
+      "title_en": "Our Lady of the Hour Church",
+      "kicker_ar": "برج يروي الزمن",
+      "kicker_en": "A tower that tells time",
+      "description_ar": "معلم بارز في النسيج التاريخي للموصل القديمة، ببرج ساعته وحضوره المعماري الفريد.",
+      "description_en": "A landmark of old Mosul, known for its clock tower and distinctive architectural presence.",
+      "credit": "الدبوني · CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Our_Lady_of_the_Hour_Church.jpg",
+      "id": "clock-church",
+      "images": []
+    },
+    {
+      "image": "images/mosul/al-tahira-2025.jpg",
+      "title_ar": "كنيسة الطاهرة التحتانية",
+      "title_en": "Al-Tahira al-Tahtaniyya Church",
+      "kicker_ar": "تراث حي وتعايش",
+      "kicker_en": "Living heritage & coexistence",
+      "description_ar": "فضاء تراثي داخل المدينة القديمة يعكس تنوع الموصل وعمق عمارتها الدينية.",
+      "description_en": "A heritage space in the old city reflecting Mosul’s diversity and deep religious architecture.",
+      "credit": "الدبوني · CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Al-Tahira_al-Tahtaniyya_Church_Mosul.jpg",
+      "id": "al-tahira",
+      "images": []
+    },
+    {
+      "image": "images/mosul/river-gate-2019.jpg",
+      "title_ar": "باب الشط",
+      "title_en": "The River Gate — Bab al-Shatt",
+      "kicker_ar": "من المدينة إلى دجلة",
+      "kicker_en": "From the city to the Tigris",
+      "description_ar": "إحدى بوابات الموصل التاريخية المطلة باتجاه النهر، وبصمة باقية من سور المدينة القديمة.",
+      "description_en": "A historic Mosul gate facing the river and a surviving trace of the old city wall.",
+      "credit": "MosulEye · CC BY 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Mosul_-_The_river%27s_gate.jpg",
+      "id": "river-gate",
+      "images": []
+    },
+    {
+      "image": "images/mosul/bashtabia-2014.jpg",
+      "title_ar": "قلعة باشطابيا",
+      "title_en": "Bash Tapia Castle",
+      "kicker_ar": "حارسة الضفة القديمة",
+      "kicker_en": "Guardian of the old bank",
+      "description_ar": "من بقايا تحصينات الموصل وسورها التاريخي على ضفة دجلة، ومشهد يرتبط بذاكرة المدينة.",
+      "description_en": "Remains of Mosul’s historic fortifications and wall on the Tigris, tied to the city’s memory.",
+      "credit": "Eng Omer Akram · CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Bashtabia.jpg",
+      "id": "bashtabia",
+      "images": []
+    },
+    {
+      "image": "images/mosul/mosul-museum.jpg",
+      "title_ar": "متحف الموصل الحضاري",
+      "title_en": "Mosul Cultural Museum",
+      "kicker_ar": "بوابة حضارات نينوى",
+      "kicker_en": "Gateway to Nineveh’s civilizations",
+      "description_ar": "محطة أساسية لفهم تاريخ نينوى والموصل وما تركته حضارات وادي الرافدين من فن وآثار.",
+      "description_en": "An essential stop for understanding Nineveh, Mosul and the art and archaeology of Mesopotamia.",
+      "credit": "Iraqi government archive · Public domain",
+      "source": "https://commons.wikimedia.org/wiki/File:Mosul_Cultural_Museum.jpg",
+      "id": "museum",
+      "images": []
+    },
+    {
+      "image": "images/mosul/mashki-gate-1990.jpg",
+      "title_ar": "بوابة مشكي — نينوى",
+      "title_en": "Mashki Gate — Nineveh",
+      "kicker_ar": "صورة أرشيفية",
+      "kicker_en": "Archive photograph",
+      "description_ar": "بوابة من سور نينوى الآشورية؛ تظهر هنا في صورة أرشيفية من عام 1990 قبل الأحداث اللاحقة.",
+      "description_en": "A gate in the Assyrian wall of Nineveh, shown here in a 1990 archive photograph before later events.",
+      "credit": "Fredarch · CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Nineveh_mashki_gate_from_west.JPG",
+      "id": "mashki",
+      "images": []
+    },
+    {
+      "image": "images/mosul/pasha-mosque-2019.jpg",
+      "title_ar": "جامع الباشا والمدينة القديمة",
+      "title_en": "Pasha Mosque & the Old City",
+      "kicker_ar": "أزقة من حجر وذاكرة",
+      "kicker_en": "Alleys of stone and memory",
+      "description_ar": "مشهد من نسيج الموصل القديمة حيث تتجاور الأزقة والأسواق ودور العبادة في حكاية واحدة.",
+      "description_en": "A view into old Mosul, where alleys, markets and places of worship share one urban story.",
+      "credit": "Levi Clancy · CC0",
+      "source": "https://commons.wikimedia.org/wiki/File:Views_of_Pasha_Mosque_in_the_old_city_of_Mosul_in_the_summer_of_2019,_after_war_with_the_Islamic_State_24.jpg",
+      "id": "pasha",
+      "images": []
+    },
+    {
+      "image": "images/mosul/tigris-2019.jpg",
+      "title_ar": "نهر دجلة",
+      "title_en": "The Tigris River",
+      "kicker_ar": "نبض الموصل",
+      "kicker_en": "Mosul’s pulse",
+      "description_ar": "النهر الذي يقسم الموصل إلى جانبيها ويربط الجسور والأسواق والذاكرة اليومية للمدينة.",
+      "description_en": "The river dividing Mosul’s two banks while connecting its bridges, markets and everyday memory.",
+      "credit": "Levi Clancy · CC0",
+      "source": "https://commons.wikimedia.org/wiki/File:Views_along_the_river_Tigris_in_Mosul_in_2019_when_Moslawis_go_during_the_summer_to_cool_down_01.jpg",
+      "id": "tigris",
+      "images": []
+    }
+  ],
+  "hotels": [
+    {
+      "image": "images/hotels/ramada-mosul.avif",
+      "stars": 5,
+      "name_ar": "رامادا بلازا باي ويندهام الموصل كورنيش",
+      "name_en": "Ramada Plaza by Wyndham Mosul Corniche",
+      "rating_ar": "فئة فاخرة · 5 نجوم",
+      "rating_en": "Luxury category · 5 stars",
+      "location_ar": "الضفة الغربية · كورنيش دجلة",
+      "location_en": "West Bank · Tigris Corniche",
+      "rate_ar": "120–180 دولاراً / الليلة",
+      "rate_en": "$120–$180 / night",
+      "summary_ar": "خيار فاخر بإطلالات على دجلة ومرافق متكاملة، مناسب لرحلات الأعمال والضيوف الباحثين عن إقامة راقية.",
+      "summary_en": "An upscale riverside option with full facilities, suited to business trips and guests seeking a premium stay.",
+      "amenities_ar": [
+        "148 غرفة وجناحاً",
+        "مطعم وخدمة غرف على مدار الساعة",
+        "نادي رياضي وساونا وقاعات اجتماعات"
+      ],
+      "amenities_en": [
+        "148 rooms and suites",
+        "Restaurant and 24-hour room service",
+        "Gym, sauna and meeting rooms"
+      ],
+      "source": "https://www.wyndhamhotels.com/ramada/mosul-iraq/ramada-plaza-mosul-corniche/overview",
+      "id": "ramada-mosul",
+      "images": [],
+      "whatsapp": "9647710613674",
+      "wa_message_ar": "السلام عليكم، أريد الاستفسار عن حجز رامادا بلازا باي ويندهام الموصل كورنيش.\nتاريخ الوصول: \nتاريخ المغادرة: \nعدد الضيوف: \nنوع الغرفة: \nملاحظات: ",
+      "wa_message_en": "Hello, I would like to ask about booking Ramada Plaza by Wyndham Mosul Corniche.\nCheck-in date: \nCheck-out date: \nNumber of guests: \nRoom type: \nNotes: "
+    },
+    {
+      "image": "images/hotels/white-tower.jpg",
+      "stars": 4,
+      "name_ar": "فندق البرج الأبيض",
+      "name_en": "White Tower Hotel",
+      "rating_ar": "فئة متوسطة · 4 نجوم",
+      "rating_en": "Midscale category · 4 stars",
+      "location_ar": "شمال وسط الموصل",
+      "location_en": "North-Central Mosul",
+      "rate_ar": "90–110 دولارات / الليلة",
+      "rate_en": "$90–$110 / night",
+      "summary_ar": "فندق حديث يناسب المسافرين المستقلين والعوائل والمجموعات السياحية، مع غرف وأجنحة عائلية.",
+      "summary_en": "A modern hotel for independent travelers, families and tour groups, with rooms and family-sized suites.",
+      "amenities_ar": [
+        "غرف وأجنحة عائلية",
+        "ساونا وجاكوزي",
+        "إفطار وموقف سيارات وخدمة استقبال 24 ساعة"
+      ],
+      "amenities_en": [
+        "Rooms and family suites",
+        "Sauna and jacuzzi",
+        "Breakfast, parking and 24-hour reception"
+      ],
+      "source": "https://www.skyscanner.qa/hotels/iraq/mosul-hotels/%D9%81%D9%86%D8%AF%D9%82-%D8%A7%D9%84%D8%A8%D8%B1%D8%AC-%D8%A7%D9%84%D8%A8%D9%8A%D8%B6-white-tower-hotel/ht-228302228",
+      "id": "white-tower",
+      "images": [],
+      "whatsapp": "9647710613674",
+      "wa_message_ar": "السلام عليكم، أريد الاستفسار عن حجز فندق البرج الأبيض.\nتاريخ الوصول: \nتاريخ المغادرة: \nعدد الضيوف: \nنوع الغرفة: \nملاحظات: ",
+      "wa_message_en": "Hello, I would like to ask about booking White Tower Hotel.\nCheck-in date: \nCheck-out date: \nNumber of guests: \nRoom type: \nNotes: "
+    },
+    {
+      "image": "images/hotels/modern-palace.webp",
+      "stars": 4,
+      "name_ar": "فندق القصر الحديث · مودرن بلازا",
+      "name_en": "Modern Palace Hotel · Modern Plaza",
+      "rating_ar": "فئة تجارية · 3–4 نجوم",
+      "rating_en": "Commercial category · 3–4 stars",
+      "location_ar": "الدواسة والفيصلية",
+      "location_en": "Al-Dawasa & Al-Faisaliyah",
+      "rate_ar": "45–70 دولاراً / الليلة",
+      "rate_en": "$45–$70 / night",
+      "summary_ar": "إقامة عملية في قلب المركز التجاري للموصل، مناسبة للصحفيين والوفود والمسافرين بميزانية مدروسة.",
+      "summary_en": "A practical stay in Mosul's commercial center for journalists, delegations and budget-conscious travelers.",
+      "amenities_ar": [
+        "غرف بحمامات خاصة وتكييف",
+        "إنترنت ومطعم تقليدي",
+        "تنسيق المطار وسيارات الأجرة عند الطلب"
+      ],
+      "amenities_en": [
+        "En-suite rooms with climate control",
+        "Wi-Fi and a traditional restaurant",
+        "Airport and taxi coordination on request"
+      ],
+      "source": "https://iraqiguide.com/hotel/modern-plaza-international-hotel",
+      "id": "modern-palace",
+      "images": [],
+      "whatsapp": "9647710613674",
+      "wa_message_ar": "السلام عليكم، أريد الاستفسار عن حجز فندق القصر الحديث · مودرن بلازا.\nتاريخ الوصول: \nتاريخ المغادرة: \nعدد الضيوف: \nنوع الغرفة: \nملاحظات: ",
+      "wa_message_en": "Hello, I would like to ask about booking Modern Palace Hotel · Modern Plaza.\nCheck-in date: \nCheck-out date: \nNumber of guests: \nRoom type: \nNotes: "
+    },
+    {
+      "image": "images/hotels/abraj-al-madina.webp",
+      "stars": 4,
+      "name_ar": "فندق أبراج المدينة",
+      "name_en": "Abraj Al Madina Hotel",
+      "rating_ar": "فئة بوتيك · 3–4 نجوم",
+      "rating_en": "Boutique category · 3–4 stars",
+      "location_ar": "الفيصلية · الساحل الأيسر",
+      "location_en": "Al-Faisaliyah · East Bank",
+      "rate_ar": "60–80 دولاراً / الليلة",
+      "rate_en": "$60–$80 / night",
+      "summary_ar": "إقامة حديثة قرب المطاعم والمقاهي والأسواق المسائية، ملائمة للعوائل وزوار الساحل الأيسر.",
+      "summary_en": "A modern stay near restaurants, cafés and evening shopping, convenient for families and East Bank visitors.",
+      "amenities_ar": [
+        "غرف حديثة مع مصعد وتكييف",
+        "تلفاز وثلاجة صغيرة وضيافة",
+        "إفطار بوفيه وخدمة ضيوف 24 ساعة"
+      ],
+      "amenities_en": [
+        "Modern elevator-served rooms",
+        "TV, mini-fridge and refreshment station",
+        "Buffet breakfast and 24-hour guest service"
+      ],
+      "source": "https://abrajalmadina.com/?lang=ar",
+      "id": "abraj-al-madina",
+      "images": [],
+      "whatsapp": "9647710613674",
+      "wa_message_ar": "السلام عليكم، أريد الاستفسار عن حجز فندق أبراج المدينة.\nتاريخ الوصول: \nتاريخ المغادرة: \nعدد الضيوف: \nنوع الغرفة: \nملاحظات: ",
+      "wa_message_en": "Hello, I would like to ask about booking Abraj Al Madina Hotel.\nCheck-in date: \nCheck-out date: \nNumber of guests: \nRoom type: \nNotes: "
+    },
+    {
+      "image": "images/hotels/al-baron.jfif",
+      "stars": 3,
+      "name_ar": "فندق البارون",
+      "name_en": "Al-Baron Hotel",
+      "rating_ar": "فئة قياسية · 3 نجوم",
+      "rating_en": "Standard category · 3 stars",
+      "location_ar": "وسط الموصل",
+      "location_en": "Central Mosul",
+      "rate_ar": "45–65 دولاراً / الليلة",
+      "rate_en": "$45–$65 / night",
+      "summary_ar": "خيار اقتصادي مرتب للإقامات القصيرة والمسافرين المستقلين، قريب بالسيارة من المدينة القديمة.",
+      "summary_en": "A tidy value option for short stays and independent travelers, a quick drive from the old city.",
+      "amenities_ar": [
+        "غرف عملية بحمامات خاصة",
+        "تكييف وتدفئة وإنترنت",
+        "استقبال 24 ساعة وحفظ أمتعة"
+      ],
+      "amenities_en": [
+        "Functional rooms with private bathrooms",
+        "Air conditioning, heating and Wi-Fi",
+        "24-hour reception and luggage storage"
+      ],
+      "source": "https://www.traveloka.com/en-en/hotel/asia/al-baron-hotel-mosul-9000006204301",
+      "id": "al-baron",
+      "images": [],
+      "whatsapp": "9647710613674",
+      "wa_message_ar": "السلام عليكم، أريد الاستفسار عن حجز فندق البارون.\nتاريخ الوصول: \nتاريخ المغادرة: \nعدد الضيوف: \nنوع الغرفة: \nملاحظات: ",
+      "wa_message_en": "Hello, I would like to ask about booking Al-Baron Hotel.\nCheck-in date: \nCheck-out date: \nNumber of guests: \nRoom type: \nNotes: "
+    }
+  ],
+  "gallery": [
+    {
+      "id": "g01",
+      "image": "images/gallery/gallery-01.jpg",
+      "alt_ar": "حارث فراس بقميص العراق 2026",
+      "alt_en": "Harith Firas in an Iraq 2026 shirt",
+      "category": "iraq sports"
+    },
+    {
+      "id": "g02",
+      "image": "images/gallery/gallery-02.jpg",
+      "alt_ar": "لقاء خلال إحدى الرحلات العربية",
+      "alt_en": "A meeting during an Arab journey",
+      "category": "iraq guests"
+    },
+    {
+      "id": "g03",
+      "image": "images/gallery/gallery-03.jpg",
+      "alt_ar": "حارث فراس خلال السفر",
+      "alt_en": "Harith Firas while traveling",
+      "category": "travel"
+    },
+    {
+      "id": "g04",
+      "image": "images/gallery/gallery-04.jpg",
+      "alt_ar": "حارث فراس مع سائح أجنبي في العراق",
+      "alt_en": "Harith with an international tourist in Iraq",
+      "category": "iraq guests"
+    },
+    {
+      "id": "g05",
+      "image": "images/gallery/gallery-05.jpg",
+      "alt_ar": "جولة مع مجموعة سياح أجانب",
+      "alt_en": "A tour with international visitors",
+      "category": "iraq guests"
+    },
+    {
+      "id": "g06",
+      "image": "images/gallery/gallery-06.jpg",
+      "alt_ar": "لحظة مميزة مع ضيوف العراق",
+      "alt_en": "A memorable moment with guests in Iraq",
+      "category": "iraq guests"
+    },
+    {
+      "id": "g07",
+      "image": "images/gallery/gallery-07.jpg",
+      "alt_ar": "حارث في ملعب كرة قدم خلال رحلة جماهيرية",
+      "alt_en": "Harith at a stadium during a fan trip",
+      "category": "sports"
+    },
+    {
+      "id": "g08",
+      "image": "images/gallery/gallery-08.jpg",
+      "alt_ar": "حارث فراس خلال تنظيم جولة",
+      "alt_en": "Harith Firas organizing a tour",
+      "category": "iraq travel"
+    },
+    {
+      "id": "g09",
+      "image": "images/gallery/gallery-09.jpg",
+      "alt_ar": "ضيافة عربية خلال إحدى الرحلات",
+      "alt_en": "Arab hospitality during a trip",
+      "category": "travel guests"
+    },
+    {
+      "id": "g10",
+      "image": "images/gallery/gallery-10.jpg",
+      "alt_ar": "حارث فراس في إسطنبول",
+      "alt_en": "Harith Firas in Istanbul",
+      "category": "turkey"
+    },
+    {
+      "id": "g11",
+      "image": "images/gallery/gallery-11.jpg",
+      "alt_ar": "بوستر رحلة الموصل إلى جدة والعمرة وكأس الخليج",
+      "alt_en": "Mosul–Jeddah Umrah and Gulf Cup trip poster",
+      "category": "posters sports umrah"
+    },
+    {
+      "id": "g12",
+      "image": "images/gallery/gallery-12.jpg",
+      "alt_ar": "حارث فراس في رحلة بحرية",
+      "alt_en": "Harith Firas on a waterside journey",
+      "category": "turkey travel"
+    },
+    {
+      "id": "g13",
+      "image": "images/gallery/gallery-13.jpg",
+      "alt_ar": "بوستر برنامج إسطنبول الكبرى",
+      "alt_en": "Grand Istanbul program poster",
+      "category": "posters turkey"
+    },
+    {
+      "id": "g14",
+      "image": "images/gallery/gallery-14.jpg",
+      "alt_ar": "إطلالة من إسطنبول",
+      "alt_en": "A view from Istanbul",
+      "category": "turkey"
+    },
+    {
+      "id": "g15",
+      "image": "images/gallery/gallery-15.jpg",
+      "alt_ar": "جولة سياحية أمام معلم عثماني",
+      "alt_en": "A tour at an Ottoman landmark",
+      "category": "turkey guests"
+    },
+    {
+      "id": "g16",
+      "image": "images/gallery/gallery-16.jpg",
+      "alt_ar": "لقاء مرح مع أحد ضيوف العراق",
+      "alt_en": "A cheerful meeting with a guest in Iraq",
+      "category": "iraq guests"
+    },
+    {
+      "id": "g17",
+      "image": "images/gallery/gallery-17.jpg",
+      "alt_ar": "حارث مع سائح أمام بوابة عشتار في بابل",
+      "alt_en": "Harith with a visitor at the Ishtar Gate in Babylon",
+      "category": "iraq guests"
+    },
+    {
+      "id": "g18",
+      "image": "images/gallery/gallery-18.jpg",
+      "alt_ar": "رحلة حارث فراس إلى إسطنبول",
+      "alt_en": "Harith Firas in Istanbul",
+      "category": "turkey"
+    },
+    {
+      "id": "g19",
+      "image": "images/gallery/gallery-19.jpg",
+      "alt_ar": "حارث فراس في أجواء شتوية",
+      "alt_en": "Harith Firas in winter scenery",
+      "category": "turkey travel"
+    },
+    {
+      "id": "g20",
+      "image": "images/gallery/gallery-20.jpg",
+      "alt_ar": "حارث وسط أجواء مباراة جماهيرية",
+      "alt_en": "Harith amid a football crowd",
+      "category": "sports"
+    },
+    {
+      "id": "g21",
+      "image": "images/gallery/gallery-21.jpg",
+      "alt_ar": "صورة من تغطية إسطنبول",
+      "alt_en": "A scene from Istanbul coverage",
+      "category": "turkey"
+    },
+    {
+      "id": "g22",
+      "image": "images/gallery/gallery-22.jpg",
+      "alt_ar": "من بلاد الرافدين إلى كأس العالم",
+      "alt_en": "From Mesopotamia to the World Cup",
+      "category": "sports iraq"
+    },
+    {
+      "id": "g23",
+      "image": "images/gallery/gallery-23.jpg",
+      "alt_ar": "حارث خلال إحدى الرحلات الخارجية",
+      "alt_en": "Harith on an international journey",
+      "category": "travel"
+    },
+    {
+      "id": "g24",
+      "image": "images/gallery/gallery-24.jpg",
+      "alt_ar": "بوستر رحلة تركيا بعين مختلفة",
+      "alt_en": "Turkey through a different lens poster",
+      "category": "posters turkey"
+    }
+  ],
+  "gallery_filters": [
+    {
+      "id": "iraq",
+      "key": "iraq",
+      "label_ar": "العراق والضيوف",
+      "label_en": "Iraq & guests"
+    },
+    {
+      "id": "turkey",
+      "key": "turkey",
+      "label_ar": "تركيا",
+      "label_en": "Türkiye"
+    },
+    {
+      "id": "sports",
+      "key": "sports",
+      "label_ar": "الرياضة",
+      "label_en": "Sports"
+    },
+    {
+      "id": "posters",
+      "key": "posters",
+      "label_ar": "البوسترات",
+      "label_en": "Posters"
+    }
+  ],
+  "social_links": [
+    {
+      "id": "facebook",
+      "label": "Facebook",
+      "url": "https://www.facebook.com/profile.php?id=100063651072840"
+    },
+    {
+      "id": "instagram",
+      "label": "Instagram",
+      "url": "https://www.instagram.com/harfir1/"
+    },
+    {
+      "id": "youtube",
+      "label": "YouTube",
+      "url": "https://youtube.com/channel/UC5_QzqI4Io-K4rwuiAQe_9w"
+    },
+    {
+      "id": "x",
+      "label": "X",
+      "url": "https://x.com/harithfiras3"
+    }
+  ],
+  "custom_sections": []
+}

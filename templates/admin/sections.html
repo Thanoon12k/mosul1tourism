@@ -1,0 +1,33 @@
+{% extends "admin/base.html" %}
+{% block title %}Sections{% endblock %}
+{% block crumbs %}Sections &amp; order{% endblock %}
+{% block actions %}<a class="btn btn-primary" href="{{ url_for('admin.item_edit', coll='custom_sections') }}">+ New section</a>{% endblock %}
+{% block content %}
+<p class="muted">The hero banner is always first and the footer always last. Use the arrows to reorder the sections in between, the eye to show/hide, and <b>Edit</b> to change their titles, texts and images. Section numbers (01, 02 …) update automatically.</p>
+<ul class="section-list">
+    {% for row in rows %}
+    <li class="section-row {{ '' if row.visible else 'is-hidden' }}">
+        <span class="section-num">{{ loop.index }}</span>
+        <div class="section-name">
+            <strong>{{ row.name }}</strong>
+            {% if row.custom %}<span class="badge">custom</span>{% elif row.title %}<span class="muted">{{ row.title }}</span>{% endif %}
+            {% if not row.visible %}<span class="badge badge-off">hidden</span>{% endif %}
+        </div>
+        <div class="row-tools">
+            {% for action, label, title in [('up', '↑', 'Move up'), ('down', '↓', 'Move down'), ('toggle', ('Hide' if row.visible else 'Show'), 'Show or hide')] %}
+            <form method="post">
+                <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+                <input type="hidden" name="key" value="{{ row.key }}">
+                <button class="btn btn-ghost small" name="action" value="{{ action }}" title="{{ title }}">{{ label }}</button>
+            </form>
+            {% endfor %}
+            {% if row.custom %}
+            <a class="btn btn-primary small" href="{{ url_for('admin.item_edit', coll='custom_sections', item_id=row.id) }}">Edit</a>
+            {% else %}
+            <a class="btn btn-primary small" href="{{ url_for('admin.section_edit', key=row.key) }}">Edit</a>
+            {% endif %}
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

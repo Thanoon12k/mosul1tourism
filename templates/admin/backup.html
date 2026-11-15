@@ -1,0 +1,26 @@
+{% extends "admin/base.html" %}
+{% block title %}Backup{% endblock %}
+{% block crumbs %}Backup &amp; restore{% endblock %}
+{% block content %}
+<div class="two-col">
+    <section class="panel">
+        <h2>Download a backup</h2>
+        <p class="muted">Saves all texts, lists and image paths (not the image files) as one JSON file.</p>
+        <a class="btn btn-primary" href="{{ url_for('admin.backup_download') }}">Download backup</a>
+    </section>
+    <form class="panel" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+        <h2>Restore a backup</h2>
+        <p class="muted">Replaces all current content with the uploaded backup file.</p>
+        <input type="file" name="file" accept=".json,application/json" required>
+        <button class="btn btn-primary" name="action" value="restore" data-confirm="Replace all current content with this backup?">Restore</button>
+    </form>
+    <form class="panel danger-zone" method="post">
+        <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+        <h2>Reset to original content</h2>
+        <p class="muted">Puts back the website content as it was originally built. Uploaded images stay in the media library. Type <b>RESET</b> to confirm.</p>
+        <input name="confirm" placeholder="RESET" autocomplete="off">
+        <button class="btn btn-danger" name="action" value="reset">Reset everything</button>
+    </form>
+</div>
+{% endblock %}

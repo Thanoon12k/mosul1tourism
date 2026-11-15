@@ -16,6 +16,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 SKIP_DIR = {
     '.git', '__pycache__', 'node_modules', 'venv', '.venv', 'env',
     '.idea', '.vscode', '.pytest_cache', 'dist', 'build', 'hotelsimages',
+    # Live content edited from the dashboard must never be overwritten.
+    'data', 'uploads',
 }
 SKIP_FILE = {
     'cmd.ps1', 'out.txt', 'watch.ps1', 'deploy.py', '.pa_token',

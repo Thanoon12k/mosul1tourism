@@ -1,0 +1,23 @@
+{% extends "admin/base.html" %}
+{% from "admin/_fields.html" import field, form_buttons %}
+{% block title %}{{ 'New ' ~ schema.singular if is_new else schema.label }}{% endblock %}
+{% block crumbs %}<a href="{{ url_for('admin.collection', coll=coll) }}">{{ schema.label }}</a> / {{ 'New ' ~ schema.singular if is_new else (item.get(schema.title ~ '_en') or item.get(schema.title ~ '_ar') or item.get(schema.title) or 'Edit') }}{% endblock %}
+{% block actions %}
+{% if not is_new %}
+<form method="post" action="{{ url_for('admin.item_action', coll=coll, item_id=item.id) }}">
+    <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+    <button class="btn btn-danger" name="action" value="delete" data-confirm="Delete this {{ schema.singular }}?">Delete</button>
+</form>
+{% endif %}
+{% endblock %}
+{% block content %}
+<form method="post" enctype="multipart/form-data" class="edit-form">
+    <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+    {% if coll == 'gallery' and filters %}<datalist id="filter-keys">{% for f in filters %}<option value="{{ f.key }}">{% endfor %}</datalist>{% endif %}
+    <fieldset class="panel">
+        <legend>{{ 'New ' ~ schema.singular if is_new else 'Edit ' ~ schema.singular }}</legend>
+        {% for f in schema.fields %}{{ field(f, item) }}{% endfor %}
+    </fieldset>
+    {{ form_buttons(then_new=true) }}
+</form>
+{% endblock %}

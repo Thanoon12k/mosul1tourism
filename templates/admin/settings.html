@@ -1,0 +1,20 @@
+{% extends "admin/base.html" %}
+{% from "admin/_fields.html" import field, form_buttons %}
+{% block title %}Site settings{% endblock %}
+{% block crumbs %}Site settings &amp; hero{% endblock %}
+{% block content %}
+<form method="post" enctype="multipart/form-data" class="edit-form">
+    <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+    <nav class="tabs" aria-label="Settings groups">
+        {% for group in groups %}<a href="#g{{ loop.index }}">{{ group.title }}</a>{% endfor %}
+        <a href="{{ url_for('admin.collection', coll='hero_facts') }}">Hero facts →</a>
+    </nav>
+    {% for group in groups %}
+    <fieldset class="panel" id="g{{ loop.index }}">
+        <legend>{{ group.title }}</legend>
+        {% for f in group.fields %}{{ field(f, data) }}{% endfor %}
+    </fieldset>
+    {% endfor %}
+    {{ form_buttons() }}
+</form>
+{% endblock %}

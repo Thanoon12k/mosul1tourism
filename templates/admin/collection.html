@@ -1,0 +1,102 @@
+{% extends "admin/base.html" %}
+{% block title %}{{ schema.label }}{% endblock %}
+{% block crumbs %}{{ schema.label }} <span class="muted">({{ items | length }})</span>{% endblock %}
+{% block actions %}<a class="btn btn-primary" href="{{ url_for('admin.item_edit', coll=coll) }}">+ Add {{ schema.singular }}</a>{% endblock %}
+{% block content %}
+{% if coll == 'custom_sections' %}<p class="muted">Custom sections are added before “About”. Reorder them on the <a href="{{ url_for('admin.sections') }}">Sections</a> page.</p>{% endif %}
+
+{% if schema.image %}
+<form class="panel bulk" id="bulk" method="post" action="{{ url_for('admin.bulk_upload', coll=coll) }}" enctype="multipart/form-data">
+    <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+    <h2>Bulk upload</h2>
+    <p class="muted">Select or drop many images — one new {{ schema.singular }} is created for each image. You can then write the texts for each one.</p>
+    <label class="dropzone">
+        <input type="file" name="files" accept="image/*" multiple required data-preview-multi>
+        <span>⬆ Drop images here or click to choose <small>(jpg, png, webp, avif, gif…)</small></span>
+    </label>
+    <div class="pending-previews" data-pending></div>
+    <div class="row">
+        {% if coll == 'gallery' %}
+        <label class="inline">Tags for these photos
+            <input type="text" name="category" placeholder="{{ filters | map(attribute='key') | join(' ') }}" list="filter-keys">
+        </label>
+        {% endif %}
+        <label class="inline">Add to
+            <select name="position"><option value="start">the beginning</option><option value="end">the end</option></select>
+        </label>
+        <button class="btn btn-primary" type="submit">Upload</button>
+    </div>
+</form>
+{% endif %}
+
+{% if coll == 'gallery' %}
+<datalist id="filter-keys">{% for f in filters %}<option value="{{ f.key }}">{% endfor %}</datalist>
+<form method="post" action="{{ url_for('admin.gallery_bulk_edit') }}" class="gallery-edit">
+    <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+    <div class="form-bar sticky">
+        <button class="btn btn-primary" type="submit" name="action" value="save">Save all captions</button>
+        <button class="btn btn-danger" type="submit" name="action" value="delete_selected" data-confirm="Delete the selected photos from the gallery?">Delete selected</button>
+        <label class="inline"><input type="checkbox" data-select-all> Select all</label>
+        <span class="muted">Tag keys: {% for f in filters %}<code>{{ f.key }}</code> {% endfor %}</span>
+    </div>
+    <div class="gallery-table">
+        {% for item in items %}
+        <div class="g-row" id="item-{{ item.id }}">
+            <input type="checkbox" name="selected" value="{{ item.id }}" aria-label="Select photo {{ loop.index }}">
+            <a href="{{ url_for('admin.item_edit', coll=coll, item_id=item.id) }}" class="g-thumb"><img src="{{ media(item.image) }}" alt="" loading="lazy"><b>{{ loop.index }}</b></a>
+            <div class="g-fields">
+                <input type="text" name="g_{{ item.id }}_alt_ar" value="{{ item.alt_ar }}" dir="rtl" placeholder="الوصف بالعربية">
+                <input type="text" name="g_{{ item.id }}_alt_en" value="{{ item.alt_en }}" placeholder="English caption">
+                <input type="text" name="g_{{ item.id }}_category" value="{{ item.category }}" placeholder="tags" list="filter-keys">
+            </div>
+            <div class="row-tools">
+                {% for action, label in [('top', '⤒'), ('up', '↑'), ('down', '↓')] %}
+                <button class="btn btn-ghost small" formaction="{{ url_for('admin.item_action', coll=coll, item_id=item.id) }}" name="action" value="{{ action }}" title="{{ action }}">{{ label }}</button>
+                {% endfor %}
+            </div>
+        </div>
+        {% else %}
+        <p class="muted">No photos yet — use bulk upload above.</p>
+        {% endfor %}
+    </div>
+    <p class="muted small">Tip: moving a photo reloads the page — save your caption edits first.</p>
+</form>
+{% else %}
+<ul class="item-list">
+    {% for item in items %}
+    <li class="item-row" id="item-{{ item.id }}">
+        <span class="section-num">{{ loop.index }}</span>
+        {% if schema.image %}
+        <a class="item-thumb" href="{{ url_for('admin.item_edit', coll=coll, item_id=item.id) }}">
+            {% if item[schema.image] %}<img src="{{ media(item[schema.image]) }}" alt="" loading="lazy">{% else %}<span>No image</span>{% endif %}
+        </a>
+        {% endif %}
+        <div class="item-name">
+            <a href="{{ url_for('admin.item_edit', coll=coll, item_id=item.id) }}"><strong>{{ titles[loop.index0] }}</strong></a>
+            {% set ar = item.get(schema.title ~ '_ar') %}{% if ar %}<span class="muted" dir="rtl">{{ ar }}</span>{% endif %}
+            {% if item.images %}<span class="badge">+{{ item.images | length }} photos</span>{% endif %}
+            {% if item.visible is defined and not item.visible %}<span class="badge badge-off">hidden</span>{% endif %}
+            {% if coll == 'social_links' %}<span class="muted">{{ item.url }}</span>{% endif %}
+            {% if coll == 'gallery_filters' %}<code>{{ item.key }}</code>{% endif %}
+            {% if coll == 'hero_facts' %}<code>{{ item.value }}</code>{% endif %}
+        </div>
+        <div class="row-tools">
+            {% for action, label in [('up', '↑'), ('down', '↓'), ('duplicate', 'Copy')] %}
+            <form method="post" action="{{ url_for('admin.item_action', coll=coll, item_id=item.id) }}">
+                <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+                <button class="btn btn-ghost small" name="action" value="{{ action }}" title="{{ action }}">{{ label }}</button>
+            </form>
+            {% endfor %}
+            <a class="btn btn-primary small" href="{{ url_for('admin.item_edit', coll=coll, item_id=item.id) }}">Edit</a>
+            <form method="post" action="{{ url_for('admin.item_action', coll=coll, item_id=item.id) }}">
+                <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+                <button class="btn btn-danger small" name="action" value="delete" data-confirm="Delete “{{ titles[loop.index0] }}”?">Delete</button>
+            </form>
+        </div>
+    </li>
+    {% else %}
+    <li class="muted">Nothing here yet. <a href="{{ url_for('admin.item_edit', coll=coll) }}">Add the first {{ schema.singular }}</a>.</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

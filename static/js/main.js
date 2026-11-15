@@ -11,13 +11,13 @@
 
     const languageMeta = {
         ar: {
-            title: "الموصل مدينة سياحية | حارث فراس",
-            description: "حارث فراس السياحة في الموصل — جولات سياحية، حج وعمرة، وحجز فنادق مختارة في الموصل.",
+            title: root.dataset.titleAr || document.title,
+            description: root.dataset.descAr || "",
             switchLabel: "Switch to English",
         },
         en: {
-            title: "Mosul, a City of Tourism | Harith Firas",
-            description: "Harith Firas Mosul Tourism — guided tours, Hajj and Umrah journeys, and selected hotel booking in Mosul.",
+            title: root.dataset.titleEn || document.title,
+            description: root.dataset.descEn || "",
             switchLabel: "التبديل إلى العربية",
         },
     };
@@ -56,7 +56,7 @@
             image.alt = image.dataset[currentLanguage === "ar" ? "altAr" : "altEn"];
         });
 
-        document.querySelectorAll(".gallery-item[data-alt-ar][data-alt-en]").forEach((item) => {
+        document.querySelectorAll(".gallery-item[data-alt-ar][data-alt-en], .lb-thumb[data-alt-ar][data-alt-en]").forEach((item) => {
             item.setAttribute("aria-label", item.dataset[currentLanguage === "ar" ? "altAr" : "altEn"]);
         });
 
@@ -70,7 +70,7 @@
         });
     }
 
-    applyLanguage(safeStoredLanguage() || "en");
+    applyLanguage(safeStoredLanguage() || root.dataset.defaultLang || "en");
 
     function closeMenu() {
         if (!menuToggle || !mainNav) return;
@@ -128,28 +128,34 @@
     const lightboxPrev = lightbox?.querySelector(".lightbox-prev");
     const lightboxNext = lightbox?.querySelector(".lightbox-next");
     let lightboxIndex = 0;
+    let lightboxItems = [];
     let lastFocused = null;
 
     function visibleGalleryItems() {
         return galleryItems.filter((item) => !item.hidden);
     }
 
+    function groupItems(item) {
+        if (item.classList.contains("gallery-item")) return visibleGalleryItems();
+        return [...document.querySelectorAll(".lb-thumb")].filter((thumb) => thumb.dataset.group === item.dataset.group);
+    }
+
     function updateLightbox(index) {
-        const items = visibleGalleryItems();
+        const items = lightboxItems;
         if (!items.length || !lightboxImage || !lightboxCaption) return;
         lightboxIndex = (index + items.length) % items.length;
         const item = items[lightboxIndex];
         const source = item.querySelector("img");
         lightboxImage.src = source.src;
         lightboxImage.alt = item.dataset[currentLanguage === "ar" ? "altAr" : "altEn"];
-        lightboxCaption.textContent = lightboxImage.alt;
+        lightboxCaption.textContent = items.length > 1 ? `${lightboxImage.alt} · ${lightboxIndex + 1}/${items.length}` : lightboxImage.alt;
     }
 
     function openLightbox(item) {
         if (!lightbox) return;
-        const items = visibleGalleryItems();
+        lightboxItems = groupItems(item);
         lastFocused = item;
-        updateLightbox(items.indexOf(item));
+        updateLightbox(lightboxItems.indexOf(item));
         lightbox.hidden = false;
         body.style.overflow = "hidden";
         lightboxClose?.focus();
@@ -164,6 +170,7 @@
     }
 
     galleryItems.forEach((item) => item.addEventListener("click", () => openLightbox(item)));
+    document.querySelectorAll(".lb-thumb").forEach((item) => item.addEventListener("click", () => openLightbox(item)));
     lightboxClose?.addEventListener("click", closeLightbox);
     lightboxPrev?.addEventListener("click", () => updateLightbox(lightboxIndex - 1));
     lightboxNext?.addEventListener("click", () => updateLightbox(lightboxIndex + 1));
